@@ -1,10 +1,10 @@
 {
   "notary_standard": "RFC 6962 Certificate Transparency Merkle Tree + NIST FIPS 203/204 PQC Hybrid Envelope",
-  "timestamp_utc": "2026-11-04T22:23:48Z",
+  "timestamp_utc": "2026-11-04T22:41:37Z",
   "holding_authority": "Standard 1979 Holdings, LLC (standard1979.com)",
   "audited_core_files_count": 66,
-  "rfc6962_merkle_root_sha256": "7b9109c5466cded30d3202d783936ca7cf872efbcbea8be595b7fec643238dc9",
-  "post_quantum_sha3_512_hybrid_seal": "6f6d0873dc10876298d2bc98095bca67af772f3e50bcc6f1b969b3dd79da48ef8f3dbc960d6383acfe86af53d947b07d8ca935128cafae72d3f2aab68f27fd08",
+  "rfc6962_merkle_root_sha256": "4db692cfb0d8cee68b031798d7d6a3c67e5a3d21a8b05da1e4fba1ebb6491c30",
+  "post_quantum_sha3_512_hybrid_seal": "7e5e96606ecb0192b414a077d3d3fa0c2ee56c700041f1222d61ef52e5756954064be094f4c7fbc129b5b0c34efc59d4f03b5d95241dc9ce5dc8402a3c7a7b15",
   "domains_covered": [
     "standard1979.com",
     "AuraIntelCore.com",

@@ -1,8 +1,48 @@
 AVISOS DE SOFTWARE DE CODIGO ABIERTO DE TERCEROS (POL-SEC-OSS-001)
-Fecha: 2026-11-04T19:29:19Z
+Fecha: 2026-11-04T19:30:17Z
+-----------------------------------------------------------------
+Paquete: cryptography (43.0.1)
+PURL: pkg:pypi/cryptography@43.0.1
+Licencia SPDX: Ver repositorio origen
 -----------------------------------------------------------------
 Paquete: pydantic (2.9.2)
 PURL: pkg:pypi/pydantic@2.9.2
+Licencia SPDX: Ver repositorio origen
+-----------------------------------------------------------------
+Paquete: uvicorn (0.30.6)
+PURL: pkg:pypi/uvicorn@0.30.6
+Licencia SPDX: Ver repositorio origen
+-----------------------------------------------------------------
+Paquete: finance-tax-engine/requirements.txt (null)
+PURL: N/A
+Licencia SPDX: Ver repositorio origen
+-----------------------------------------------------------------
+Paquete: cryptography (43.0.1)
+PURL: pkg:pypi/cryptography@43.0.1
+Licencia SPDX: Ver repositorio origen
+-----------------------------------------------------------------
+Paquete: fastapi (0.115.0)
+PURL: pkg:pypi/fastapi@0.115.0
+Licencia SPDX: Ver repositorio origen
+-----------------------------------------------------------------
+Paquete: uvicorn (0.30.6)
+PURL: pkg:pypi/uvicorn@0.30.6
+Licencia SPDX: Ver repositorio origen
+-----------------------------------------------------------------
+Paquete: fastapi (0.115.0)
+PURL: pkg:pypi/fastapi@0.115.0
+Licencia SPDX: Ver repositorio origen
+-----------------------------------------------------------------
+Paquete: aura-opco/sso-oidc-provider/requirements.txt (null)
+PURL: N/A
+Licencia SPDX: Ver repositorio origen
+-----------------------------------------------------------------
+Paquete: pydantic (2.9.2)
+PURL: pkg:pypi/pydantic@2.9.2
+Licencia SPDX: Ver repositorio origen
+-----------------------------------------------------------------
+Paquete: fastapi (0.115.0)
+PURL: pkg:pypi/fastapi@0.115.0
 Licencia SPDX: Ver repositorio origen
 -----------------------------------------------------------------
 Paquete: pydantic (2.9.2)
@@ -13,48 +53,8 @@ Paquete: aura-opco/security-gateway/requirements.txt (null)
 PURL: N/A
 Licencia SPDX: Ver repositorio origen
 -----------------------------------------------------------------
-Paquete: fastapi (0.115.0)
-PURL: pkg:pypi/fastapi@0.115.0
-Licencia SPDX: Ver repositorio origen
------------------------------------------------------------------
 Paquete: uvicorn (0.30.6)
 PURL: pkg:pypi/uvicorn@0.30.6
-Licencia SPDX: Ver repositorio origen
------------------------------------------------------------------
-Paquete: aura-opco/sso-oidc-provider/requirements.txt (null)
-PURL: N/A
-Licencia SPDX: Ver repositorio origen
------------------------------------------------------------------
-Paquete: fastapi (0.115.0)
-PURL: pkg:pypi/fastapi@0.115.0
-Licencia SPDX: Ver repositorio origen
------------------------------------------------------------------
-Paquete: finance-tax-engine/requirements.txt (null)
-PURL: N/A
-Licencia SPDX: Ver repositorio origen
------------------------------------------------------------------
-Paquete: fastapi (0.115.0)
-PURL: pkg:pypi/fastapi@0.115.0
-Licencia SPDX: Ver repositorio origen
------------------------------------------------------------------
-Paquete: uvicorn (0.30.6)
-PURL: pkg:pypi/uvicorn@0.30.6
-Licencia SPDX: Ver repositorio origen
------------------------------------------------------------------
-Paquete: uvicorn (0.30.6)
-PURL: pkg:pypi/uvicorn@0.30.6
-Licencia SPDX: Ver repositorio origen
------------------------------------------------------------------
-Paquete: cryptography (43.0.1)
-PURL: pkg:pypi/cryptography@43.0.1
-Licencia SPDX: Ver repositorio origen
------------------------------------------------------------------
-Paquete: cryptography (43.0.1)
-PURL: pkg:pypi/cryptography@43.0.1
-Licencia SPDX: Ver repositorio origen
------------------------------------------------------------------
-Paquete: pydantic (2.9.2)
-PURL: pkg:pypi/pydantic@2.9.2
 Licencia SPDX: Ver repositorio origen
 -----------------------------------------------------------------
 Paquete: c2pa-python (0.6.0)
@@ -71,10 +71,6 @@ Licencia SPDX: Ver repositorio origen
 -----------------------------------------------------------------
 Paquete: presidio-anonymizer (2.2.355)
 PURL: pkg:pypi/presidio-anonymizer@2.2.355
-Licencia SPDX: Ver repositorio origen
------------------------------------------------------------------
-Paquete: pyjwt (2.9.0)
-PURL: pkg:pypi/pyjwt@2.9.0
 Licencia SPDX: Ver repositorio origen
 -----------------------------------------------------------------
 Paquete: stripe (10.12.0)

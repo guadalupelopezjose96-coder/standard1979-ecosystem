@@ -1,0 +1,65 @@
+version: "3.9"
+
+services:
+  aura-oidc-sso:
+    build:
+      context: .
+      dockerfile: deploy/docker/Dockerfile.python-hardened
+    container_name: s1979-aura-oidc-sso
+    working_dir: /app/aura-opco/sso-oidc-provider
+    command: ["uvicorn", "aura_oidc_sso_server:app", "--host", "0.0.0.0", "--port", "8001"]
+    ports:
+      - "8001:8001"
+    read_only: true
+    security_opt:
+      - no-new-privileges:true
+    networks:
+      - s1979_zero_trust_net
+
+  aura-ai-security-gateway:
+    build:
+      context: .
+      dockerfile: deploy/docker/Dockerfile.python-hardened
+    container_name: s1979-aura-ai-gateway
+    working_dir: /app/aura-opco/security-gateway
+    command: ["uvicorn", "aura_ai_security_gateway:app", "--host", "0.0.0.0", "--port", "8002"]
+    ports:
+      - "8002:8002"
+    read_only: true
+    security_opt:
+      - no-new-privileges:true
+    networks:
+      - s1979_zero_trust_net
+
+  s1979-finance-tax-engine:
+    build:
+      context: .
+      dockerfile: deploy/docker/Dockerfile.python-hardened
+    container_name: s1979-finance-tax-engine
+    working_dir: /app/finance-tax-engine
+    command: ["uvicorn", "s1979_billing_tax_royalty_engine:app", "--host", "0.0.0.0", "--port", "8003"]
+    ports:
+      - "8003:8003"
+    read_only: true
+    security_opt:
+      - no-new-privileges:true
+    networks:
+      - s1979_zero_trust_net
+
+  otel-collector-zero-pii:
+    image: otel/opentelemetry-collector-contrib:0.111.0
+    container_name: s1979-otel-zero-pii
+    command: ["--config=/etc/otel-collector-zero-pii.yaml"]
+    volumes:
+      - ./sre-observability-cicd/otel-collector-zero-pii.yaml:/etc/otel-collector-zero-pii.yaml:ro
+    ports:
+      - "4317:4317"
+      - "4318:4318"
+    security_opt:
+      - no-new-privileges:true
+    networks:
+      - s1979_zero_trust_net
+
+networks:
+  s1979_zero_trust_net:
+    driver: bridge

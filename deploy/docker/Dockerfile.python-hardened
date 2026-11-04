@@ -1,0 +1,25 @@
+FROM python:3.12-slim-bookworm
+
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    PIP_NO_CACHE_DIR=1
+
+RUN groupadd -g 10001 s1979grp && \
+    useradd -u 10001 -g s1979grp -m -s /sbin/nologin s1979usr
+
+WORKDIR /app
+
+COPY aura-opco/security-gateway/requirements.txt /tmp/req-aura.txt
+COPY finance-tax-engine/requirements.txt /tmp/req-fin.txt
+COPY aura-opco/sso-oidc-provider/requirements.txt /tmp/req-sso.txt
+
+RUN pip install --upgrade pip && \
+    pip install -r /tmp/req-aura.txt -r /tmp/req-fin.txt -r /tmp/req-sso.txt && \
+    rm -rf /tmp/*.txt
+
+COPY aura-opco/ /app/aura-opco/
+COPY phonix-opco/ /app/phonix-opco/
+COPY finance-tax-engine/ /app/finance-tax-engine/
+
+RUN chown -R s1979usr:s1979grp /app
+USER 10001:10001

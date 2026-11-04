@@ -1,0 +1,48 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: s1979-holding
+  labels:
+    entity: Standard_1979_Holdings_LLC
+    domain: standard1979.com
+    istio-injection: enabled
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: aura-opco
+  labels:
+    entity: Aura_Technologies_Operating_LLC
+    domains: AuraIntelCore_AuraTetrax_AuraIntelStudios3D
+    istio-injection: enabled
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: phonix-opco
+  labels:
+    entity: Phonix_Communications_Operating_LLC
+    domains: fourphonix_prophonix
+    istio-injection: enabled
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: default-deny-all-zero-trust
+  namespace: aura-opco
+spec:
+  podSelector: {}
+  policyTypes:
+    - Ingress
+    - Egress
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: default-deny-all-zero-trust
+  namespace: phonix-opco
+spec:
+  podSelector: {}
+  policyTypes:
+    - Ingress
+    - Egress

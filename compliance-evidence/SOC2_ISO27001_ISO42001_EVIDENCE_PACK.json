@@ -1,0 +1,68 @@
+{
+  "schema": "https://standard1979.com/schemas/compliance-attestation-v1.json",
+  "timestamp_utc": "2026-11-04T19:39:11Z",
+  "holding_entity": "Standard 1979 Holdings, LLC",
+  "operating_subsidiaries": [
+    "Aura Technologies Operating, LLC",
+    "Phonix Communications Operating, LLC"
+  ],
+  "domains_in_scope": [
+    "standard1979.com",
+    "AuraIntelCore.com",
+    "AuraTetrax.com",
+    "AuraIntelStudios3D.com",
+    "fourphonix.com",
+    "prophonix.com"
+  ],
+  "frameworks_verified": {
+    "SOC2_TYPE_II": [
+      "CC1.1",
+      "CC6.1",
+      "CC6.6",
+      "CC6.7",
+      "CC7.2",
+      "CC8.1",
+      "PI1.4"
+    ],
+    "ISO_IEC_27001_2022": [
+      "A.5.15",
+      "A.8.9",
+      "A.8.10",
+      "A.8.24",
+      "A.8.25",
+      "A.8.28"
+    ],
+    "ISO_IEC_42001_2023": [
+      "A.6.2.2",
+      "A.7.4",
+      "A.8.4",
+      "A.9.3"
+    ],
+    "FCC_TELECOM": [
+      "STIR_SHAKEN_ATIS_1000074",
+      "TCPA_47_USC_227",
+      "FL_FTSA_501_059",
+      "E911_RAY_BAUMS_KARIS_LAW",
+      "CPNI_47_CFR_64"
+    ],
+    "TAX_AND_CORPORATE": [
+      "IRC_SECTION_482_ARM_LENGTH",
+      "PCI_DSS_V4_SAQ_A",
+      "FCC_USF_FL_CST"
+    ]
+  },
+  "cryptographic_proofs": {
+    "git_signed_commit_head": "9a987ffe17cd9f5d94c8bb2c3d61274e70e03e2c",
+    "sbom_cyclonedx_sha256": "effab12fc528c30fbb0b31f05b441f1b1356deab00e049107b6d4ddef5df743a",
+    "third_party_notices_sha256": "8639bf2c2d52c91a9ad883465f0708d3aec4b87c18ae03a0d8969ad48d0f9733",
+    "encrypted_drp_vault_file": "standard1979-ecosystem-v1.0.0-20261104T193550Z.tar.gz.aes256.enc",
+    "encrypted_drp_vault_sha256": "e2603a3fb6981e620c9b8fc55b34475193213acf10f33a2160de8f4c8aed1be1"
+  },
+  "gatekeeper_status": {
+    "policy_id": "POL-SEC-OSS-001",
+    "warnings": 0,
+    "failures": 0,
+    "exceptions": 0,
+    "legal_state": "APPROVED"
+  }
+}

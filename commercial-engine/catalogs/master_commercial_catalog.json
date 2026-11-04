@@ -1,0 +1,128 @@
+{
+  "standard1979.com": {
+    "entity": "Standard 1979 Holdings, LLC",
+    "sales_email": "licensing@standard1979.com",
+    "billing_email": "treasury@standard1979.com",
+    "royalty_rate": 0.0,
+    "tax_profile": "EXEMPT_B2B_IP_LICENSE",
+    "products": [
+      {
+        "sku": "S1979-IP-WL",
+        "name": "Enterprise White-Label IP License (Annual)",
+        "price_usd": 15000.0,
+        "billing": "annual"
+      },
+      {
+        "sku": "S1979-AUDIT-DR",
+        "name": "SOC2/ISO27001/ISO42001 Compliance Architecture License",
+        "price_usd": 4500.0,
+        "billing": "one_time"
+      }
+    ]
+  },
+  "auraintelcore.com": {
+    "entity": "Aura Technologies Operating, LLC",
+    "sales_email": "sales@auraintelcore.com",
+    "billing_email": "billing@auraintelcore.com",
+    "royalty_rate": 0.15,
+    "tax_profile": "SAAS_FL_EXEMPT_OR_OSS",
+    "products": [
+      {
+        "sku": "AIC-SSO-ENT",
+        "name": "OIDC/OAuth 2.1 Zero-Trust Identity Federation",
+        "price_usd": 499.0,
+        "billing": "monthly"
+      },
+      {
+        "sku": "AIC-LLM-GW",
+        "name": "Enterprise AI Security Gateway (100M Tokens)",
+        "price_usd": 850.0,
+        "billing": "monthly"
+      }
+    ]
+  },
+  "auratetrax.com": {
+    "entity": "Aura Technologies Operating, LLC",
+    "sales_email": "sales@auratetrax.com",
+    "billing_email": "billing@auratetrax.com",
+    "royalty_rate": 0.15,
+    "tax_profile": "PAAS_COMPUTE",
+    "products": [
+      {
+        "sku": "ATX-PAAS-PRO",
+        "name": "Tetrax Modular Agentic PaaS (Starter 5 Nodes)",
+        "price_usd": 299.0,
+        "billing": "monthly"
+      },
+      {
+        "sku": "ATX-PAAS-ENT",
+        "name": "Tetrax Autonomous Cluster (Unlimited Nodes + Dedicated K8s)",
+        "price_usd": 1499.0,
+        "billing": "monthly"
+      }
+    ]
+  },
+  "auraintelstudios3d.com": {
+    "entity": "Aura Technologies Operating, LLC",
+    "sales_email": "studio@auraintelstudios3d.com",
+    "billing_email": "billing@auraintelstudios3d.com",
+    "royalty_rate": 0.15,
+    "tax_profile": "DIGITAL_3D_ASSETS_FL_7PCT",
+    "products": [
+      {
+        "sku": "AIS3D-PACK-INDIE",
+        "name": "C2PA-Signed 3D Generative Asset Commercial Pack",
+        "price_usd": 149.0,
+        "billing": "one_time"
+      },
+      {
+        "sku": "AIS3D-GPU-STUDIO",
+        "name": "Dedicated 3D Generative Render Studio Subscription",
+        "price_usd": 499.0,
+        "billing": "monthly"
+      }
+    ]
+  },
+  "fourphonix.com": {
+    "entity": "Phonix Communications Operating, LLC",
+    "sales_email": "sales@fourphonix.com",
+    "billing_email": "owner@fourphonix.com",
+    "royalty_rate": 0.1,
+    "tax_profile": "TELECOM_USF_FL_CST",
+    "products": [
+      {
+        "sku": "4PHX-UCAAS-BIZ",
+        "name": "FourPhonix Cloud PBX & Omni-Channel UCaaS (10 Seats)",
+        "price_usd": 249.0,
+        "billing": "monthly"
+      },
+      {
+        "sku": "4PHX-E911-DID",
+        "name": "Nationwide DID Bundle + Kari's Law / RAY BAUM E911",
+        "price_usd": 99.0,
+        "billing": "monthly"
+      }
+    ]
+  },
+  "prophonix.com": {
+    "entity": "Phonix Communications Operating, LLC",
+    "sales_email": "enterprise@prophonix.com",
+    "billing_email": "billing@prophonix.com",
+    "royalty_rate": 0.1,
+    "tax_profile": "TELECOM_USF_FL_CST",
+    "products": [
+      {
+        "sku": "PPHX-SIP-TRUNK",
+        "name": "ProPhonix High-Volume Wholesale SIP Trunk (STIR/SHAKEN A)",
+        "price_usd": 199.0,
+        "billing": "monthly"
+      },
+      {
+        "sku": "PPHX-TCPA-SAFE",
+        "name": "Carrier Compliance Dialer Suite (TCPA/FTSA Safe Harbor)",
+        "price_usd": 799.0,
+        "billing": "monthly"
+      }
+    ]
+  }
+}

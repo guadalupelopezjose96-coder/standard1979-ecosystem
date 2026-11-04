@@ -1,0 +1,8 @@
+# RFC 9116 Security Disclosure Policy - fourphonix.com (Phonix Communications Operating, LLC)
+Contact: mailto:security-soc@standard1979.com
+Contact: https://fourphonix.com/.well-known/security-contact
+Expires: 2027-12-31T23:59:59.000Z
+Encryption: https://standard1979.com/.well-known/pgp-key.txt
+Preferred-Languages: en, es
+Canonical: https://fourphonix.com/.well-known/security.txt
+Policy: https://standard1979.com/legal/vulnerability-disclosure-policy

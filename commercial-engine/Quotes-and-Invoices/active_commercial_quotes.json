@@ -1,7 +1,7 @@
 [
   {
-    "invoice_id": "INV-ATX-PAAS-ENT-202611042108",
-    "timestamp_utc": "2026-11-04T21:08:22Z",
+    "invoice_id": "INV-ATX-PAAS-ENT-202611042110",
+    "timestamp_utc": "2026-11-04T21:10:29Z",
     "domain": "auratetrax.com",
     "Operating_entity": "Aura Technologies Operating, LLC",
     "sales_contact": "sales@auratetrax.com",
@@ -16,11 +16,11 @@
     "total_payable_usd": 1499.0,
     "irc_482_holding_royalty_usd": 224.85,
     "opco_net_retained_usd": 1274.15,
-    "checkout_url": "https://pay.auratetrax.com/checkout/INV-ATX-PAAS-ENT-202611042108?pci_mode=saq_a_3ds2"
+    "checkout_url": "https://pay.auratetrax.com/checkout/INV-ATX-PAAS-ENT-202611042110?pci_mode=saq_a_3ds2"
   },
   {
-    "invoice_id": "INV-AIS3D-GPU-STUDIO-202611042108",
-    "timestamp_utc": "2026-11-04T21:08:22Z",
+    "invoice_id": "INV-AIS3D-GPU-STUDIO-202611042110",
+    "timestamp_utc": "2026-11-04T21:10:29Z",
     "domain": "auraintelstudios3d.com",
     "Operating_entity": "Aura Technologies Operating, LLC",
     "sales_contact": "studio@auraintelstudios3d.com",
@@ -35,11 +35,11 @@
     "total_payable_usd": 1067.86,
     "irc_482_holding_royalty_usd": 149.7,
     "opco_net_retained_usd": 848.3,
-    "checkout_url": "https://pay.auraintelstudios3d.com/checkout/INV-AIS3D-GPU-STUDIO-202611042108?pci_mode=saq_a_3ds2"
+    "checkout_url": "https://pay.auraintelstudios3d.com/checkout/INV-AIS3D-GPU-STUDIO-202611042110?pci_mode=saq_a_3ds2"
   },
   {
-    "invoice_id": "INV-PPHX-TCPA-SAFE-202611042108",
-    "timestamp_utc": "2026-11-04T21:08:22Z",
+    "invoice_id": "INV-PPHX-TCPA-SAFE-202611042110",
+    "timestamp_utc": "2026-11-04T21:10:29Z",
     "domain": "prophonix.com",
     "Operating_entity": "Phonix Communications Operating, LLC",
     "sales_contact": "enterprise@prophonix.com",
@@ -54,11 +54,11 @@
     "total_payable_usd": 1134.9,
     "irc_482_holding_royalty_usd": 79.9,
     "opco_net_retained_usd": 719.1,
-    "checkout_url": "https://pay.prophonix.com/checkout/INV-PPHX-TCPA-SAFE-202611042108?pci_mode=saq_a_3ds2"
+    "checkout_url": "https://pay.prophonix.com/checkout/INV-PPHX-TCPA-SAFE-202611042110?pci_mode=saq_a_3ds2"
   },
   {
-    "invoice_id": "INV-S1979-IP-WL-202611042108",
-    "timestamp_utc": "2026-11-04T21:08:22Z",
+    "invoice_id": "INV-S1979-IP-WL-202611042110",
+    "timestamp_utc": "2026-11-04T21:10:29Z",
     "domain": "standard1979.com",
     "Operating_entity": "Standard 1979 Holdings, LLC",
     "sales_contact": "licensing@standard1979.com",
@@ -73,6 +73,6 @@
     "total_payable_usd": 15000.0,
     "irc_482_holding_royalty_usd": 0.0,
     "opco_net_retained_usd": 15000.0,
-    "checkout_url": "https://pay.standard1979.com/checkout/INV-S1979-IP-WL-202611042108?pci_mode=saq_a_3ds2"
+    "checkout_url": "https://pay.standard1979.com/checkout/INV-S1979-IP-WL-202611042110?pci_mode=saq_a_3ds2"
   }
 ]

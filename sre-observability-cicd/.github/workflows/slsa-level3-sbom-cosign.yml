@@ -1,0 +1,42 @@
+name: Standard1979-SLSA3-SBOM-Cosign-Pipeline
+
+on:
+  push:
+    branches: [ "main" ]
+
+permissions:
+  contents: read
+  id-token: write
+  packages: write
+  attestations: write
+
+jobs:
+  build-sbom-and-sign:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Run Trivy Vulnerability Scanner (SAST / SCA Gate)
+        uses: aquasecurity/trivy-action@0.24.0
+        with:
+          scan-type: 'fs'
+          scan-ref: '.'
+          severity: 'CRITICAL,HIGH'
+          exit-code: '1'
+
+      - name: Generate CycloneDX SBOM (Executive Order 14028 Compliance)
+        uses: anchore/sbom-action@v0.17.2
+        with:
+          format: cyclonedx-json
+          output-file: sbom-standard1979-cyclonedx.json
+
+      - name: Install Cosign (Sigstore Keyless OIDC Signing)
+        uses: sigstore/cosign-installer@v3.6.0
+
+      - name: Sign SBOM Attestation Blob with Sigstore OIDC
+        run: |
+          cosign sign-blob --yes \
+            --output-signature sbom-standard1979.sig \
+            --output-certificate sbom-standard1979.pem \
+            sbom-standard1979-cyclonedx.json

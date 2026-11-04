@@ -1,6 +1,6 @@
 {
   "schema": "https://standard1979.com/schemas/compliance-attestation-v1.json",
-  "timestamp_utc": "2026-11-04T21:24:42Z",
+  "timestamp_utc": "2026-11-04T21:57:50Z",
   "holding_entity": "Standard 1979 Holdings, LLC",
   "operating_subsidiaries": [
     "Aura Technologies Operating, LLC",
@@ -52,11 +52,11 @@
     ]
   },
   "cryptographic_proofs": {
-    "git_signed_commit_head": "ee62277ba3991c8d0349ae6edfd54535a2655651",
-    "sbom_cyclonedx_sha256": "8f23d047c043b8cd3357007af299a8b37bbb215cc68325a0f2e3ee52b41e9e5f",
-    "third_party_notices_sha256": "bdf1c890970195a5026e1706983b1a5ef0a59049339bf72a0a809b71b6354da1",
-    "encrypted_drp_vault_file": "standard1979-ecosystem-v1.0.0-20261104T210848Z.tar.gz.aes256.enc",
-    "encrypted_drp_vault_sha256": "4a49a51144358d0e46b4cb469d59276951761c58daca7ed71cf7508c704722fd"
+    "git_signed_commit_head": "e0f3abee62b80fbdfd78f11d859a974a0f05f02e",
+    "sbom_cyclonedx_sha256": "eb3b433bafa3484907f509c0d38c2f2884c155b172d7f1a376c26bb96654b328",
+    "third_party_notices_sha256": "99937b76e686efaba0d92198943b38da3c09255385c2e82ccda742f1ce87e51c",
+    "encrypted_drp_vault_file": "standard1979-ecosystem-v1.0.0-20261104T212446Z.tar.gz.aes256.enc",
+    "encrypted_drp_vault_sha256": "e99a50652d123a02d8d9dcb012d1715eb62cf94763c91745443c136968978aea"
   },
   "gatekeeper_status": {
     "policy_id": "POL-SEC-OSS-001",

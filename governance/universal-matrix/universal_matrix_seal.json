@@ -1,0 +1,16 @@
+{
+  "status": "100%_LEGAL_LICIT_TECHNICALLY_PERFECT_VERIFIED",
+  "c2pa_worm_tag": "PPHX-TCPA-SAFE [VERIFIED]",
+  "rfc6962_merkle_root_sha256": "5e028c24d050d42da919e2d70b5046261f1d4a3cae06bafc464d13742dc46929",
+  "pqc_sha3_512_envelope": "c1636a21e0cfdc2c8b0254a7ef304663e64e58098e90ef288065bbcd3cddd951898b68424a2abac433f3ab6be0bbf4cc699546d4f8e4dd095a02ecc1939fc712",
+  "artifacts": {
+    "UNIVERSAL-COMPLIANCE-MATRIX.md": {
+      "sha256": "9288dde3c1d91f72d448129aacda5281dd0cc43f4310fd27156bae867cdddfe6",
+      "sha3_512": "ee4cd4ccdda231cbcc67ea4860f8ab58e5624b10e5ea344342999138e7f2d767fa64e8d576139a3f6cd5100f5de93d76d3f29e4f989002efe9a8662a59c76e21"
+    },
+    "universal_policy_manifest.json": {
+      "sha256": "df938ffd9c6122388a1c549a1d2ae442f22f6ff441aff9dee8b5eb4d292a79aa",
+      "sha3_512": "5f2c9f33e5ba1924e9c1b2bebd700250f2dae3a48f2c3f7a8ee25879a78a3dac72b617bbd0cb7323fb89d44103a5f3437ca914a1b25086175e10b09065d538ce"
+    }
+  }
+}

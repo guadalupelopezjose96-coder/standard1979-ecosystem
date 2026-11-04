@@ -1,0 +1,41 @@
+{
+  "schema_version": "2026.11.04-UNIVERSAL-100",
+  "holding_entity": "Standard 1979 Holdings, LLC",
+  "holding_domain": "standard1979.com",
+  "stripe_b2b_portal_id": "bpc_1UWnOzFE1PknNS53wBZloc6n",
+  "invoicing_standard": "PEPPOL-UBL-3.0",
+  "ftc_compliance": "16-CFR-Part-425-Click-to-Cancel-Active",
+  "subsidiaries": {
+    "ai_compute": {
+      "legal_name": "Aura Technologies Operating, LLC",
+      "irc_482_royalty_rate": 0.15,
+      "domains": ["AuraIntelCore.com", "AuraTetrax.com", "AuraIntelStudios3D.com"],
+      "ai_governance": ["ISO/IEC 42001:2023", "NIST AI RMF 1.0", "EU AI Act Art. 50", "C2PA v2.1", "EEOC >= 0.80"]
+    },
+    "telecom_ucaas": {
+      "legal_name": "Phonix Communications Operating, LLC",
+      "irc_482_royalty_rate": 0.10,
+      "domains": ["fourphonix.com", "prophonix.com"],
+      "telecom_controls": {
+        "stir_shaken": "ATIS-1000074-Level-A",
+        "florida_ftsa": "Fla. Stat. 501.059 (08:00-20:00, MAX 3/24H, DNC/RND)",
+        "itg_traceback_sla_hours": 24,
+        "e911": "Kari-Law-RAY-BAUM-PIDF-LO"
+      },
+      "skus": {
+        "PPHX-SIP-TRUNK": {"gross_usd": 199.00, "royalty_usd": 19.90, "net_opco_usd": 179.10},
+        "PPHX-TCPA-SAFE": {"gross_usd": 799.00, "royalty_usd": 79.90, "net_opco_usd": 719.10},
+        "PPHX-CARRIER-CPS": {"gross_usd": 2450.00, "royalty_usd": 245.00, "net_opco_usd": 2205.00},
+        "PPHX-SBC-PEER": {"gross_usd": 4900.00, "royalty_usd": 490.00, "net_opco_usd": 4410.00}
+      }
+    }
+  },
+  "cryptographic_standards": {
+    "git_signing": "Ed25519",
+    "merkle_transparency": "RFC-6962",
+    "pqc_envelope": "SHA3-512 + NIST-FIPS-203-204",
+    "key_custody": "Shamir-3-of-5-GF256",
+    "drp_vault": "AES-256-CBC-PBKDF2-600000",
+    "dsar_sanitization": "NIST-SP-800-88-Rev1-Crypto-Shredding"
+  }
+}

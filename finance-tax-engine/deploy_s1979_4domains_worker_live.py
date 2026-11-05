@@ -124,7 +124,7 @@ select,input[type=range]{{width:100%;padding:10px;background:{t["panel"]};color:
     <div class="cgrid">
       <div><div style="font-size:11px;color:#94a3b8;margin-bottom:6px">1. PLAN SELECCIONADO:</div><select id="ps" onchange="rc()">{opts}</select></div>
       <div><div style="font-size:11px;color:#94a3b8;margin-bottom:6px">2. {t["unit"]}: (<span id="ql">1</span>)</div><input type="range" id="qr" min="1" max="25" value="1" oninput="rc()"></div>
-      <div><button class="btn" onclick="pay()">Activar SKU + Checkout &rarr;</button></div>
+      <div><a id="pay-btn" class="btn" href="https://buy.stripe.com/5kQ7sL7XAamsgyXavgcjS0A" onclick="pay();return false;" style="display:block;text-align:center;text-decoration:none;line-height:20px">Activar SKU + Checkout &rarr;</a></div>
     </div>
     <div class="mgrid">
       <div class="mcard"><div style="font-size:11px;color:#94a3b8">SUBTOTAL BRUTO</div><div id="mg" style="font-size:22px;font-weight:800;color:#fff;margin-top:4px"></div></div>
@@ -134,7 +134,7 @@ select,input[type=range]{{width:100%;padding:10px;background:{t["panel"]};color:
     </div>
     <div style="margin-top:16px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;font-size:12px;color:#94a3b8">
       <span>Facturación electrónica PEPPOL UBL 3.0 | Click-to-Cancel FTC 16 CFR 425 Activo</span>
-      <a href="javascript:void(0)" onclick="pay()" style="color:{t["accent"]};border:1px solid {t["accent"]};padding:8px 14px;border-radius:8px;text-decoration:none;font-weight:700">Abrir Portal Fiscal Stripe ({PORTAL})</a>
+      <a id="portal-btn" href="https://buy.stripe.com/5kQ7sL7XAamsgyXavgcjS0A" style="color:{t['accent']};border:1px solid {t['accent']};padding:8px 14px;border-radius:8px;text-decoration:none;font-weight:700">Abrir Portal Fiscal Stripe ({PORTAL})</a>
     </div>
   </div>
 </div>
@@ -150,9 +150,9 @@ function rc(){{
   document.getElementById('mg').innerText='USD '+g.toLocaleString('en-US',{{minimumFractionDigits:2}});
   document.getElementById('mr').innerText='USD '+r.toLocaleString('en-US',{{minimumFractionDigits:2}});
   document.getElementById('mn').innerText='USD '+n.toLocaleString('en-US',{{minimumFractionDigits:2}});
-  document.getElementById('ms').innerText=sku+' [VERIFIED]';
+      document.getElementById('ms').innerText=sku+' [VERIFIED]';const L={{"PPHX-SIP-TRUNK": "https://buy.stripe.com/28Edr9a5I8ek96v8n8cjS0z", "PPHX-TCPA-SAFE": "https://buy.stripe.com/5kQ7sL7XAamsgyXavgcjS0A", "PPHX-CARRIER-CPS": "https://buy.stripe.com/cNibJ1elYdyE1E35aWcjS0B", "PPHX-SBC-PEER": "https://buy.stripe.com/9B67sLa5I52896vdHscjS0C", "4PHX-E911-DID": "https://buy.stripe.com/9B67sL5PsdyE4Qf1YKcjS0D", "4PHX-UCAAS-BIZ": "https://buy.stripe.com/7sY7sLfq2gK0beD320cjS0E", "4PHX-OMNI-AI": "https://buy.stripe.com/dRm28ra5IeCiciHcDocjS0F", "4PHX-PBX-ENT50": "https://buy.stripe.com/aFa5kD0v89iogyXfPAcjS0G", "AIC-LLM-GW": "https://buy.stripe.com/8x24gzgu6fGM3Mb6f0cjS0H", "ATRX-PAAS-NODE": "https://buy.stripe.com/bJeaEXdhUgK082r5aWcjS0I", "AIS3D-H100-C2PA": "https://buy.stripe.com/14A9ATa5I528dmL9rccjS0J", "S1979-IP-LIC": "https://buy.stripe.com/aFaeVdcdQ5280zZ6f0cjS0K", "ATX-PAAS-PRO": "https://buy.stripe.com/14A7sLfq2bqwgyX9rccjS0L", "ATX-EXEC-100K": "https://buy.stripe.com/dRm00j4Lo1PW1E39rccjS0M", "ATX-PAAS-ENT": "https://buy.stripe.com/8x25kD2Dg8ek82rbzkcjS0N", "ATX-GPU-NODE": "https://buy.stripe.com/bJe9AT91EbqwfuTfPAcjS0O", "AIS3D-PACK-INDIE": "https://buy.stripe.com/00waEXb9M7ag6Yn7j4cjS0P", "AIS3D-GPU-STUDIO": "https://buy.stripe.com/6oUaEX7XA3Y44QfgTEcjS0Q", "AIS3D-IND-TWIN": "https://buy.stripe.com/eVq28r5PsbqwbeD8n8cjS0R", "AIS3D-ENT-API": "https://buy.stripe.com/7sY7sL2Dgbqw96v8n8cjS0S"}};const u=L[sku]||'https://buy.stripe.com/5kQ7sL7XAamsgyXavgcjS0A'\;const pb=document.getElementById('pay-btn');if(pb)pb.href=u;const ptb=document.getElementById('portal-btn');if(ptb)ptb.href=u;
 }}
-function pay(){{const S1979_LINKS={{"PPHX-SIP-TRUNK": "https://buy.stripe.com/28Edr9a5I8ek96v8n8cjS0z", "PPHX-TCPA-SAFE": "https://buy.stripe.com/5kQ7sL7XAamsgyXavgcjS0A", "PPHX-CARRIER-CPS": "https://buy.stripe.com/cNibJ1elYdyE1E35aWcjS0B", "PPHX-SBC-PEER": "https://buy.stripe.com/9B67sLa5I52896vdHscjS0C", "4PHX-E911-DID": "https://buy.stripe.com/9B67sL5PsdyE4Qf1YKcjS0D", "4PHX-UCAAS-BIZ": "https://buy.stripe.com/7sY7sLfq2gK0beD320cjS0E", "4PHX-OMNI-AI": "https://buy.stripe.com/dRm28ra5IeCiciHcDocjS0F", "4PHX-PBX-ENT50": "https://buy.stripe.com/aFa5kD0v89iogyXfPAcjS0G", "AIC-LLM-GW": "https://buy.stripe.com/8x24gzgu6fGM3Mb6f0cjS0H", "ATRX-PAAS-NODE": "https://buy.stripe.com/bJeaEXdhUgK082r5aWcjS0I", "AIS3D-H100-C2PA": "https://buy.stripe.com/14A9ATa5I528dmL9rccjS0J", "S1979-IP-LIC": "https://buy.stripe.com/aFaeVdcdQ5280zZ6f0cjS0K", "ATX-PAAS-PRO": "https://buy.stripe.com/14A7sLfq2bqwgyX9rccjS0L", "ATX-EXEC-100K": "https://buy.stripe.com/dRm00j4Lo1PW1E39rccjS0M", "ATX-PAAS-ENT": "https://buy.stripe.com/8x25kD2Dg8ek82rbzkcjS0N", "ATX-GPU-NODE": "https://buy.stripe.com/bJe9AT91EbqwfuTfPAcjS0O", "AIS3D-PACK-INDIE": "https://buy.stripe.com/00waEXb9M7ag6Yn7j4cjS0P", "AIS3D-GPU-STUDIO": "https://buy.stripe.com/6oUaEX7XA3Y44QfgTEcjS0Q", "AIS3D-IND-TWIN": "https://buy.stripe.com/eVq28r5PsbqwbeD8n8cjS0R", "AIS3D-ENT-API": "https://buy.stripe.com/7sY7sL2Dgbqw96v8n8cjS0S"}};const s=document.getElementById('ps');const o=s.options[s.selectedIndex];const sku=o.getAttribute('data-s');window.location.href=S1979_LINKS[sku]||'https://buy.stripe.com/28Edr9a5I8ek96v8n8cjS0z';}}
+    function pay(){{const pb=document.getElementById('pay-btn');if(pb&&pb.href){{window.location.assign(pb.href);}}}}
 sel(1);
 </script></body></html>'''
 

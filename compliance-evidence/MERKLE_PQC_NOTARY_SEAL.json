@@ -1,6 +1,6 @@
 {
   "notary_standard": "RFC 6962 Certificate Transparency Merkle Tree + NIST FIPS 203/204 PQC Hybrid Envelope",
-  "timestamp_utc": "2026-11-05T01:00:32Z",
+  "timestamp_utc": "2026-11-05T01:04:59Z",
   "holding_authority": "Standard 1979 Holdings, LLC (standard1979.com)",
   "audited_core_files_count": 74,
   "rfc6962_merkle_root_sha256": "959cda03c03e54fad7a49fbb00f14fe3eb61fd7626317fda2266a0abbf92ab6e",

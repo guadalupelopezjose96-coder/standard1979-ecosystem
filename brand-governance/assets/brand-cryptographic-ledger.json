@@ -1,0 +1,78 @@
+{
+  "copyright_owner": "Standard 1979 Holdings, LLC",
+  "domains": {
+    "AuraIntelCore.com": {
+      "asc_606_classification": "Symbolic IP (Over-Time Recognition)",
+      "irc_482_royalty_rate": 0.15,
+      "legal_owner": "Standard 1979 Holdings, LLC",
+      "operating_licensee": "Aura Technologies Operating, LLC",
+      "sha256": "589fc85396c7e904c67c3786acbfa0188e7ecd865e6dff6b004511cacaa9d7b1",
+      "sha3_512_pqc": "bdbbe6dcab8d22fcb5631a7b9fe13229eff1f7d7fdf4a8289641f858fdbb174b548e03c728a146038cc4d011cd3de12df72a26695e09b0f16076a2838faf52bf",
+      "sri_integrity": "sha256-589fc85396c7e904c67c3786acbfa0188e7ecd865e6dff6b004511cacaa9d7b1",
+      "stripe_icon_sha256": "64d10750a9e5e4f4c05e68f720753ef7eeb48efcec903f8a05face2798dbcb33",
+      "stripe_logo_sha256": "78c29628faacc11575bf318736372dbe4818280b2244379db8a8cc46e539470a",
+      "svg_path": "assets/AuraIntelCore.com/bimi-logo.svg"
+    },
+    "AuraIntelStudios3D.com": {
+      "asc_606_classification": "Symbolic IP (Over-Time Recognition)",
+      "irc_482_royalty_rate": 0.15,
+      "legal_owner": "Standard 1979 Holdings, LLC",
+      "operating_licensee": "Aura Technologies Operating, LLC",
+      "sha256": "c8cef47da915642837bd4560da61b8f37aa569dece07f86f1df7c8877a9e68e3",
+      "sha3_512_pqc": "1e0140bc85a8aee3741b90331b5ba31cec7fd3e70e0e2be95ba8f38409a8990850eaaf6e78e8b1c35b1f2d4c0bc2e7cbfaa86ccf19a9e3678be50db8f20b6a45",
+      "sri_integrity": "sha256-c8cef47da915642837bd4560da61b8f37aa569dece07f86f1df7c8877a9e68e3",
+      "stripe_icon_sha256": "65dfd2e643a407462d0532441b868406958974d39536c2b931399688ca908385",
+      "stripe_logo_sha256": "3faf5930190df38d7ca81253f352e66d87911984f2ab471fa724dc3ed3e521cc",
+      "svg_path": "assets/AuraIntelStudios3D.com/bimi-logo.svg"
+    },
+    "AuraTetrax.com": {
+      "asc_606_classification": "Symbolic IP (Over-Time Recognition)",
+      "irc_482_royalty_rate": 0.15,
+      "legal_owner": "Standard 1979 Holdings, LLC",
+      "operating_licensee": "Aura Technologies Operating, LLC",
+      "sha256": "8aee119a0c7db18634205505cb3011316fb372f97cab2c31db13bd2149c0f47d",
+      "sha3_512_pqc": "c17a4b030e70370e0879714e4bcab6d9fa158ca8864aaaea7463d4ca1b7991ab0426f83d4a239f8f1a5dc51ec93d6f3cc49c5021f1e51c10c76ac44f7d979421",
+      "sri_integrity": "sha256-8aee119a0c7db18634205505cb3011316fb372f97cab2c31db13bd2149c0f47d",
+      "stripe_icon_sha256": "cbfcc09bed4efa3f3ae78cfe8644d8151525c487d0463e74a76b67f6ad94d924",
+      "stripe_logo_sha256": "8d0dce337c14dda09a0a5fc24182a8d7ddaf952c667b6cda7c6be47fa639e282",
+      "svg_path": "assets/AuraTetrax.com/bimi-logo.svg"
+    },
+    "fourphonix.com": {
+      "asc_606_classification": "Symbolic IP (Over-Time Recognition)",
+      "irc_482_royalty_rate": 0.1,
+      "legal_owner": "Standard 1979 Holdings, LLC",
+      "operating_licensee": "Phonix Communications Operating, LLC",
+      "sha256": "001012714d5b7aac2214ed360099a2c064626853e3714e391ad6b6e939d63c75",
+      "sha3_512_pqc": "17c6cf1e8a5ba52deb3d6963c6a56e18063f32fc89588946a6a77f34a8e448a6212eea14d103ab5b0d8785ea8b492d62ddb680590510e0afaafb43aaf8105836",
+      "sri_integrity": "sha256-001012714d5b7aac2214ed360099a2c064626853e3714e391ad6b6e939d63c75",
+      "stripe_icon_sha256": "c5905f01485b1f87a9165efa4385f4048c1e6b5a0190841e092a9f0ae61ada5c",
+      "stripe_logo_sha256": "1ff73a762ffef3d3ae4525227ba26be370dec0b6574df6a6118e66f0b3021862",
+      "svg_path": "assets/fourphonix.com/bimi-logo.svg"
+    },
+    "prophonix.com": {
+      "asc_606_classification": "Symbolic IP (Over-Time Recognition)",
+      "irc_482_royalty_rate": 0.1,
+      "legal_owner": "Standard 1979 Holdings, LLC",
+      "operating_licensee": "Phonix Communications Operating, LLC",
+      "sha256": "ed0455af16a61ed7b6f77c662181d1ed764ccec040e9074916c3df9d981a4cab",
+      "sha3_512_pqc": "457f44e6627c022bb8ea6c6477ad54d12745e15dcf5a6beb3a438e0e923f5960a322cf6285063915947279db0688a5b0f35bcea064a788c2d1f51277af31cfd5",
+      "sri_integrity": "sha256-ed0455af16a61ed7b6f77c662181d1ed764ccec040e9074916c3df9d981a4cab",
+      "stripe_icon_sha256": "2994019c0893fd8a71e30758afbcbe923038e5745385eb42af2b8dc381b52fe6",
+      "stripe_logo_sha256": "05b9500e1300ca486fe727310085989004152d11d470feff9f02732595e283f7",
+      "svg_path": "assets/prophonix.com/bimi-logo.svg"
+    },
+    "standard1979.com": {
+      "asc_606_classification": "Symbolic IP (Over-Time Recognition)",
+      "irc_482_royalty_rate": 0.0,
+      "legal_owner": "Standard 1979 Holdings, LLC",
+      "operating_licensee": "Standard 1979 Holdings, LLC",
+      "sha256": "8f4e12656257ac2dd6039cb910278688f51ea10bc990e787917c800dfdaf5bb1",
+      "sha3_512_pqc": "25406ebb5e99ada4baa11d51723c8de90b6d672820a25e8a7394b724d76b690e43072ad1d82643561b2ed2d6acbee272e05f278002bfdf19b6f38e52a1d8bddf",
+      "sri_integrity": "sha256-8f4e12656257ac2dd6039cb910278688f51ea10bc990e787917c800dfdaf5bb1",
+      "stripe_icon_sha256": "092012baf21ec2748ba958466d6c075c4b7c7c18823f7a56350fb66255f5529a",
+      "stripe_logo_sha256": "af6e3ca4dd2cd365404b8fd4be4bdf537a961133c51db3cee4016eea4cdc9a28",
+      "svg_path": "assets/standard1979.com/bimi-logo.svg"
+    }
+  },
+  "statute": "17 U.S.C. 1202 & Lanham Act"
+}

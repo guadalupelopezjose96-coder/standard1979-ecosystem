@@ -4,6 +4,30 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 PORTAL = "bpc_1UWnOzFE1PknNS53wBZioc6n"
+
+STRIPE_LIVE_LINKS = {
+    "PPHX-SIP-TRUNK": "https://buy.stripe.com/28Edr9a5I8ek96v8n8cjS0z",
+    "PPHX-TCPA-SAFE": "https://buy.stripe.com/5kQ7sL7XAamsgyXavgcjS0A",
+    "PPHX-CARRIER-CPS": "https://buy.stripe.com/cNibJ1elYdyE1E35aWcjS0B",
+    "PPHX-SBC-PEER": "https://buy.stripe.com/9B67sLa5I52896vdHscjS0C",
+    "4PHX-E911-DID": "https://buy.stripe.com/9B67sL5PsdyE4Qf1YKcjS0D",
+    "4PHX-UCAAS-BIZ": "https://buy.stripe.com/7sY7sLfq2gK0beD320cjS0E",
+    "4PHX-OMNI-AI": "https://buy.stripe.com/dRm28ra5IeCiciHcDocjS0F",
+    "4PHX-PBX-ENT50": "https://buy.stripe.com/aFa5kD0v89iogyXfPAcjS0G",
+    "AIC-LLM-GW": "https://buy.stripe.com/8x24gzgu6fGM3Mb6f0cjS0H",
+    "ATRX-PAAS-NODE": "https://buy.stripe.com/bJeaEXdhUgK082r5aWcjS0I",
+    "AIS3D-H100-C2PA": "https://buy.stripe.com/14A9ATa5I528dmL9rccjS0J",
+    "S1979-IP-LIC": "https://buy.stripe.com/aFaeVdcdQ5280zZ6f0cjS0K",
+    "ATX-PAAS-PRO": "https://buy.stripe.com/14A7sLfq2bqwgyX9rccjS0L",
+    "ATX-EXEC-100K": "https://buy.stripe.com/dRm00j4Lo1PW1E39rccjS0M",
+    "ATX-PAAS-ENT": "https://buy.stripe.com/8x25kD2Dg8ek82rbzkcjS0N",
+    "ATX-GPU-NODE": "https://buy.stripe.com/bJe9AT91EbqwfuTfPAcjS0O",
+    "AIS3D-PACK-INDIE": "https://buy.stripe.com/00waEXb9M7ag6Yn7j4cjS0P",
+    "AIS3D-GPU-STUDIO": "https://buy.stripe.com/6oUaEX7XA3Y44QfgTEcjS0Q",
+    "AIS3D-IND-TWIN": "https://buy.stripe.com/eVq28r5PsbqwbeD8n8cjS0R",
+    "AIS3D-ENT-API": "https://buy.stripe.com/7sY7sL2Dgbqw96v8n8cjS0S"
+}
+
 CATALOG = [
     ("ATX-PAAS-PRO", "auratetrax.com", "Aura Technologies Operating, LLC", "1. Startup Agentic PaaS (5 Agents + Cilium eBPF MicroVMs)", 299.00, "Mensual", 0.15, "SAAS"),
     ("ATX-EXEC-100K", "auratetrax.com", "Aura Technologies Operating, LLC", "2. Autonomous Workflow Pack (100k Tool Executions + SOAR)", 450.00, "Mensual", 0.15, "SAAS"),
@@ -33,7 +57,7 @@ def generate_quote(*args):
     tax = round(gross * 0.4204 + 0.40 * qty, 2) if row[7] == "TEL" else (round(gross * 0.07, 2) if row[7] == "FL7" else 0.0)
     tot = round(gross + tax, 2)
     inv = f"INV-{row[0]}-{datetime.now(timezone.utc).strftime('%Y%m%d%H%M')}"
-    return {"invoice_id": inv, "domain": row[1], "opco": row[2], "sku": row[0], "product": row[3], "qty": qty, "gross_usd": gross, "royalty_to_standard1979_usd": roy, "tax_usd": tax, "total_usd": tot, "stripe_portal": PORTAL, "checkout_url": f"https://pay.{row[1]}/checkout/{inv}?portal={PORTAL}&pci=saq_a_3ds2"}
+    return {"invoice_id": inv, "domain": row[1], "opco": row[2], "sku": row[0], "product": row[3], "qty": qty, "gross_usd": gross, "royalty_to_standard1979_usd": roy, "tax_usd": tax, "total_usd": tot, "stripe_portal": PORTAL, "checkout_url": STRIPE_LIVE_LINKS.get(row[0], f"https://buy.stripe.com/5kQ7sL7XAamsgyXavgcjS0A")}
 
 
 def audit_arts_and_promotions():

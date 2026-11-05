@@ -1,12 +1,12 @@
 AVISOS DE SOFTWARE DE CODIGO ABIERTO DE TERCEROS (POL-SEC-OSS-001)
-Fecha: 2026-11-05T02:55:48Z
+Fecha: 2026-11-05T03:19:53Z
 -----------------------------------------------------------------
-Paquete: cryptography (43.0.1)
-PURL: pkg:pypi/cryptography@43.0.1
-Licencia SPDX: Apache-2.0
+Paquete: uvicorn (0.30.6)
+PURL: pkg:pypi/uvicorn@0.30.6
+Licencia SPDX: BSD-3-Clause
 -----------------------------------------------------------------
-Paquete: fastapi (0.115.0)
-PURL: pkg:pypi/fastapi@0.115.0
+Paquete: pydantic (2.9.2)
+PURL: pkg:pypi/pydantic@2.9.2
 Licencia SPDX: MIT
 -----------------------------------------------------------------
 Paquete: pydantic (2.9.2)
@@ -17,9 +17,9 @@ Paquete: uvicorn (0.30.6)
 PURL: pkg:pypi/uvicorn@0.30.6
 Licencia SPDX: BSD-3-Clause
 -----------------------------------------------------------------
-Paquete: cryptography (43.0.1)
-PURL: pkg:pypi/cryptography@43.0.1
-Licencia SPDX: Apache-2.0
+Paquete: uvicorn (0.30.6)
+PURL: pkg:pypi/uvicorn@0.30.6
+Licencia SPDX: BSD-3-Clause
 -----------------------------------------------------------------
 Paquete: aura-opco/security-gateway/requirements.txt (null)
 PURL: N/A
@@ -29,33 +29,33 @@ Paquete: fastapi (0.115.0)
 PURL: pkg:pypi/fastapi@0.115.0
 Licencia SPDX: MIT
 -----------------------------------------------------------------
-Paquete: uvicorn (0.30.6)
-PURL: pkg:pypi/uvicorn@0.30.6
-Licencia SPDX: BSD-3-Clause
------------------------------------------------------------------
-Paquete: aura-opco/sso-oidc-provider/requirements.txt (null)
-PURL: N/A
-Licencia SPDX: Ver repositorio origen
+Paquete: pydantic (2.9.2)
+PURL: pkg:pypi/pydantic@2.9.2
+Licencia SPDX: MIT
 -----------------------------------------------------------------
 Paquete: finance-tax-engine/requirements.txt (null)
 PURL: N/A
 Licencia SPDX: Ver repositorio origen
 -----------------------------------------------------------------
-Paquete: pydantic (2.9.2)
-PURL: pkg:pypi/pydantic@2.9.2
-Licencia SPDX: MIT
+Paquete: cryptography (43.0.1)
+PURL: pkg:pypi/cryptography@43.0.1
+Licencia SPDX: Apache-2.0
+-----------------------------------------------------------------
+Paquete: cryptography (43.0.1)
+PURL: pkg:pypi/cryptography@43.0.1
+Licencia SPDX: Apache-2.0
+-----------------------------------------------------------------
+Paquete: aura-opco/sso-oidc-provider/requirements.txt (null)
+PURL: N/A
+Licencia SPDX: Ver repositorio origen
 -----------------------------------------------------------------
 Paquete: fastapi (0.115.0)
 PURL: pkg:pypi/fastapi@0.115.0
 Licencia SPDX: MIT
 -----------------------------------------------------------------
-Paquete: pydantic (2.9.2)
-PURL: pkg:pypi/pydantic@2.9.2
+Paquete: fastapi (0.115.0)
+PURL: pkg:pypi/fastapi@0.115.0
 Licencia SPDX: MIT
------------------------------------------------------------------
-Paquete: uvicorn (0.30.6)
-PURL: pkg:pypi/uvicorn@0.30.6
-Licencia SPDX: BSD-3-Clause
 -----------------------------------------------------------------
 Paquete: c2pa-python (0.6.0)
 PURL: pkg:pypi/c2pa-python@0.6.0

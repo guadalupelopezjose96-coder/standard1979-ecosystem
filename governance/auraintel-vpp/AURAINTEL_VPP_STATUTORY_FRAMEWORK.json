@@ -1,0 +1,18 @@
+{
+  "project": "AuraIntel VPP",
+  "domain": "auraintelcore.com",
+  "holding_entity": "Standard 1979 Holdings, LLC",
+  "operating_subsidiary": "Aura Technologies Operating, LLC",
+  "intercompany_royalty_irc482": "15% AGR",
+  "stripe_master_account": "acct_1TGvtcFE1PknNS53",
+  "tax_standards": ["IRC Section 482", "FASB ASC 606", "PCI-DSS v4.0"],
+  "energy_standards": ["FERC Order 2222", "IEEE 2030.5", "OpenADR 2.0b", "NERC CIP"],
+  "ai_governance": ["ISO/IEC 42001:2023", "NIST AI RMF 1.0", "EU AI Act Art. 50"],
+  "cryptographic_standards": {
+    "notary": "RFC 6962 Merkle Tree",
+    "hash": "PQC SHA3-512",
+    "signature": "Ed25519",
+    "data_sanitization": "NIST SP 800-88 Rev. 1"
+  },
+  "compliance_status": "100_PERCENT_MANDATED"
+}

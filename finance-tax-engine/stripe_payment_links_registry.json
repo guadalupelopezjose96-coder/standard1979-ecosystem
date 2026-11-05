@@ -1,0 +1,22 @@
+{
+  "mode": "LIVE_PRODUCTION",
+  "primary_stripe_account_id": "acct_1TGvtcFE1PknNS53",
+  "account_name": "Standard 1979 Holdings, LLC",
+  "live_publishable_key": "pk_live_51TGvtcFE1PknNS53eGNgg6EJvR9hvp9gx0cV7Bb91IGkvlnHsxWngDQN0MEkXJaAbgNWR4qmxPdz5Jg8b22rtRt900uN6UCpEs",
+  "billing_portal_config_id": "bpc_1UWnOzFE1PknNS53wBZloc6n",
+  "billing_portal_url": "https://dashboard.stripe.com/acct_1TGvtcFE1PknNS53/settings/billing/portal",
+  "sku_payment_links": {
+    "PPHX-SIP-TRUNK": "https://buy.stripe.com/28EdR9a5I8ek96v8n8cjS0z",
+    "PPHX-TCPA-SAFE": "https://buy.stripe.com/5kQ7sL7XAamsgyXavgcjS0A",
+    "PPHX-CARRIER-CPS": "https://buy.stripe.com/cNibJ1elYdyE1E35aWcjS0B",
+    "PPHX-SBC-PEER": "https://buy.stripe.com/9B67sLa5I52896vdHscjS0C",
+    "4PHX-E911-DID": "https://buy.stripe.com/9B67sL5PsdyE4Qf1YKcjS0D",
+    "4PHX-UCAAS-BIZ": "https://buy.stripe.com/7sY7sLfq2gKQbeD32OcjS0E",
+    "4PHX-OMNI-AI": "https://buy.stripe.com/dRm28ra5IeCIciHcDocjS0F",
+    "4PHX-PBX-ENT50": "https://buy.stripe.com/aFa5kD0v89iogyXfPAcjS0G",
+    "AIC-LLM-GW": "https://buy.stripe.com/8x24gzgu6fGM3Mb6f0cjS0H",
+    "ATRX-PAAS-NODE": "https://buy.stripe.com/bJeaEXdhUgKQ82r5aWcjS0I",
+    "AIS3D-H100-C2PA": "https://buy.stripe.com/14A9ATa5I528dmL9rccjS0J",
+    "S1979-IP-LIC": "https://buy.stripe.com/aFaeVdcdQ5280zZ6f0cjS0K"
+  }
+}

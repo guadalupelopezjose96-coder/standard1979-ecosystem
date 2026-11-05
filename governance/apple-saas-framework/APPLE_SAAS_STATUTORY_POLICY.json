@@ -1,0 +1,20 @@
+{
+  "framework_name": "Apple Ecosystem SaaS Master Governance",
+  "dpla_compliance": "MANDATED",
+  "app_review_guidelines": {
+    "monetization": "3.1.3(c) Multiplatform Enterprise SaaS Exemption",
+    "authentication": "Sign in with Apple / OIDC compliant",
+    "privacy_manifests": "PrivacyInfo.xcprivacy audited"
+  },
+  "security_controls": {
+    "transport": "App Transport Security (ATS) TLS 1.3",
+    "device_integrity": "DCAppAttestService / Secure Enclave",
+    "notifications": "APNs HTTP/2 Token-Based Authentication (ES256)"
+  },
+  "tax_and_finops": {
+    "app_store_commissions": "Tiered 15/30% DPLA",
+    "direct_web_checkout": "PCI-DSS v4.0 / ASC 606 Deferred Revenue",
+    "intercompany_royalty": "IRC Section 482 Compliant"
+  },
+  "compliance_status": "SEALED_PRODUCTION"
+}

@@ -1,0 +1,74 @@
+{
+  "standard1979.com": {
+    "entity": "Standard 1979 Holdings, LLC",
+    "role": "Parent Holding / IP Vault & Treasury",
+    "tax_framework": "IRC \u00a7 482 / 26 U.S.C. \u00a7 482 (Arm's Length Transfer Pricing)",
+    "security_framework": "TLS 1.3 / NIST SP 800-53 Rev. 5 / FIPS 203/204 PQC",
+    "compliance": [
+      "FinCEN BOI",
+      "SOC 2 Type II",
+      "WORM Storage S3"
+    ],
+    "default_sku": "S1979-IP-LIC"
+  },
+  "auraintelcore.com": {
+    "entity": "Aura Technologies Operating, LLC",
+    "role": "Zero-Trust Identity Hub & Security Gateway",
+    "tax_framework": "IRC \u00a7 482 (15% Gross Revenue Royalty to Holding)",
+    "security_framework": "RFC 6749 / RFC 7636 (PKCE S256) / RFC 8705 (mTLS)",
+    "compliance": [
+      "NIST SP 800-63B AAL3",
+      "OWASP Top 10:2025",
+      "Zero-PII OTel"
+    ],
+    "default_sku": "AIC-LLM-GW"
+  },
+  "auratetrax.com": {
+    "entity": "Aura Technologies Operating, LLC",
+    "role": "Agentic PaaS & Autonomous AI Orchestration",
+    "tax_framework": "IRC \u00a7 482 (15% Gross Revenue Royalty to Holding)",
+    "security_framework": "CIS Kubernetes Benchmark / SLSA Level 3+ / Cilium eBPF",
+    "compliance": [
+      "EU AI Act",
+      "ISO/IEC 42001:2023",
+      "PCI DSS v4.0 SAQ-A"
+    ],
+    "default_sku": "ATX-PAAS-PRO"
+  },
+  "auraintelstudios3d.com": {
+    "entity": "Aura Technologies Operating, LLC",
+    "role": "3D GenStudio & C2PA Cryptographic Provenance",
+    "tax_framework": "IRC \u00a7 482 (15% Royalty) + FL 7.0% Digital Surtax",
+    "security_framework": "C2PA v2.1 Content Authenticity / Ed25519 Notary Manifests",
+    "compliance": [
+      "DMCA \u00a7 512 Safe Harbor",
+      "USPTO/WIPO",
+      "FTC 16 CFR \u00a7 255"
+    ],
+    "default_sku": "AIS3D-PACK-INDIE"
+  },
+  "fourphonix.com": {
+    "entity": "Phonix Communications Operating, LLC",
+    "role": "Enterprise UCaaS & Dynamic E911 Emergency Mesh",
+    "tax_framework": "IRC \u00a7 482 (10% Royalty) + USF 34.6% + FL CST 7.44%",
+    "security_framework": "SIP TLS 1.3 / SRTP / Ray Baum's & Kari's Law (PIDF-LO XML)",
+    "compliance": [
+      "FCC CPNI 47 CFR \u00a7 64",
+      "STIR/SHAKEN Tier A",
+      "10DLC A2P"
+    ],
+    "default_sku": "4PHX-E911-DID"
+  },
+  "prophonix.com": {
+    "entity": "Phonix Communications Operating, LLC",
+    "role": "High-CPS SIP Carrier & TCPA/FTSA Firewall Gateway",
+    "tax_framework": "IRC \u00a7 482 (10% Royalty) + USF + E911 Local Surcharges",
+    "security_framework": "SBC BGP Anycast / ITG Traceback <24h / FTSA Schedule",
+    "compliance": [
+      "TCPA 47 U.S.C. \u00a7 227",
+      "FL FTSA \u00a7 501.059",
+      "DNC/RND Scrubbing"
+    ],
+    "default_sku": "PPHX-TCPA-SAFE"
+  }
+}

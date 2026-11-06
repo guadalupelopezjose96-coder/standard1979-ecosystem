@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AuraIntelCore | Enterprise OIDC vLLM Gateway, OpenTofu Multi-Region & +25,000 mW VPP</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --core-bg: #030711;
+      --core-dock: #081021;
+      --core-card: #0b152b;
+      --electric-cyan: #00f0ff;
+      --cobalt: #3b82f6;
+      --vpp-emerald: #00ff9d;
+      --peppol-amber: #fbbf24;
+      --border-core: #172a4a;
+      --text-main: #f8fafc;
+      --text-dim: #8da2c0;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background-color: var(--core-bg);
+      color: var(--text-main);
+      font-family: 'Inter', sans-serif;
+      background-image:
+        radial-gradient(circle at 50% 0%, rgba(0, 240, 255, 0.12) 0%, rgba(59, 130, 246, 0.08) 42%, transparent 72%),
+        linear-gradient(to right, rgba(23, 42, 74, 0.25) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(23, 42, 74, 0.25) 1px, transparent 1px);
+      background-size: 100% 100%, 36px 36px, 36px 36px;
+      overflow-x: hidden;
+    }
+
+    /* Barra Unificada de los 6 Portales */
+    .omni-bar {
+      background: #010409;
+      border-bottom: 1px solid var(--border-core);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      padding: 0.55rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .omni-bar a {
+      color: var(--text-dim);
+      text-decoration: none;
+      padding: 0.2rem 0.55rem;
+      border-radius: 4px;
+      border: 1px solid var(--border-core);
+      margin-left: 0.3rem;
+    }
+
+    .omni-bar a.active {
+      background: var(--electric-cyan);
+      color: #020617;
+      border-color: var(--electric-cyan);
+      font-weight: 700;
+    }
+
+    /* Workstation de 3 Columnas Superiores */
+    .core-workspace {
+      max-width: 1420px;
+      margin: 1.4rem auto;
+      padding: 0 1.5rem;
+      display: grid;
+      grid-template-columns: 310px 1fr 310px;
+      gap: 1.2rem;
+    }
+
+    .dock-panel {
+      background: var(--core-dock);
+      border: 1px solid var(--border-core);
+      border-radius: 14px;
+      padding: 1.35rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
+    }
+
+    .stage-panel {
+      background: #040917;
+      border: 1px solid rgba(0, 240, 255, 0.42);
+      border-radius: 16px;
+      position: relative;
+      overflow: hidden;
+      min-height: 485px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-shadow: 0 0 45px rgba(0, 240, 255, 0.1);
+    }
+
+    #core-topology-canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+    }
+
+    .hud-bar-top, .hud-bar-bottom {
+      position: relative;
+      z-index: 2;
+      padding: 1.1rem 1.4rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.73rem;
+      background: linear-gradient(180deg, rgba(3, 7, 17, 0.9) 0%, transparent 100%);
+    }
+
+    .hud-bar-bottom {
+      background: linear-gradient(0deg, rgba(3, 7, 17, 0.94) 0%, transparent 100%);
+    }
+
+    .stage-overlay {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      padding: 1.5rem 2rem;
+      pointer-events: none;
+    }
+
+    .stage-overlay h1 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(2rem, 3.4vw, 3.05rem);
+      font-weight: 700;
+      line-height: 1.08;
+      margin-bottom: 0.7rem;
+      text-shadow: 0 6px 28px rgba(0,0,0,0.95);
+    }
+
+    .cyan-grad {
+      background: linear-gradient(90deg, #ffffff, var(--electric-cyan), var(--vpp-emerald));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .mode-btn {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--border-core);
+      color: var(--text-main);
+      padding: 0.38rem 0.7rem;
+      border-radius: 6px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      cursor: pointer;
+    }
+
+    .mode-btn.active {
+      background: var(--electric-cyan);
+      border-color: var(--electric-cyan);
+      color: #020617;
+      font-weight: 700;
+    }
+
+    .spec-row {
+      display: flex;
+      justify-content: space-between;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.74rem;
+      padding: 0.52rem 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    /* Cuadrícula de 4 Columnas para los SKUs Oficiales de AuraIntel en Stripe */
+    .catalog-wrap {
+      max-width: 1420px;
+      margin: 2.8rem auto 4rem;
+      padding: 0 1.5rem;
+    }
+
+    .sku-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(295px, 1fr));
+      gap: 1.2rem;
+      margin-top: 1.6rem;
+    }
+
+    .sku-card {
+      background: var(--core-card);
+      border: 1px solid var(--border-core);
+      border-top: 3px solid var(--electric-cyan);
+      border-radius: 14px;
+      padding: 1.65rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+
+    .sku-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--electric-cyan);
+    }
+
+    .sku-card.flagship {
+      border-top-color: var(--vpp-emerald);
+      box-shadow: 0 0 30px rgba(0, 255, 157, 0.1);
+    }
+
+    .sku-card.whale {
+      border-top-color: var(--peppol-amber);
+      box-shadow: 0 0 30px rgba(251, 191, 36, 0.1);
+    }
+
+    .sku-code {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--electric-cyan);
+      margin-bottom: 0.4rem;
+    }
+
+    .sku-price {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: clamp(1.55rem, 2vw, 1.9rem);
+      font-weight: 700;
+      color: var(--vpp-emerald);
+      white-space: nowrap;
+      margin: 0.8rem 0;
+    }
+
+    .sku-price span {
+      font-size: 0.78rem;
+      color: var(--text-dim);
+      font-weight: 400;
+    }
+
+    .btn-core {
+      display: block;
+      text-align: center;
+      background: linear-gradient(135deg, var(--electric-cyan), var(--cobalt));
+      color: #020617;
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 700;
+      font-size: 0.8rem;
+      padding: 0.75rem 1rem;
+      border-radius: 8px;
+      text-decoration: none;
+      text-transform: uppercase;
+      margin-top: 1.1rem;
+    }
+
+    @media (max-width: 1100px) {
+      .core-workspace { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="omni-bar">
+    <div>
+      <strong>AURAINTEL CORE WORKSTATION</strong> • OIDC SSO + vLLM GATEWAY • OPENTOFU MULTI-REGION • VPP +25,000 mW DER
+    </div>
+    <div>
+      <a href="https://standard1979.com">8091: Standard1979</a>
+      <a href="https://auraintelcore.com" class="active">8090: AuraIntelCore</a>
+      <a href="https://auratetrax.com">8092: AuraTetrax</a>
+      <a href="https://auraintelstudios3d.com">8093: Studios3D</a>
+      <a href="https://fourphonix.com">8094: FourPhonix</a>
+      <a href="https://prophonix.com">8095: ProPhonix</a>
+    </div>
+  </div>
+
+  <!-- Estación de Trabajo en 3 Paneles Superiores -->
+  <div class="core-workspace">
+    <!-- Panel Izquierdo: Inspector de Pasarela vLLM & OpenTofu -->
+    <aside class="dock-panel">
+      <div>
+        <div style="font-family:'Space Grotesk', sans-serif; font-size:1.3rem; font-weight:700; margin-bottom:0.2rem;">
+          AURAINTEL <span style="color:var(--electric-cyan);">CORE</span>
+        </div>
+        <div style="font-family:'JetBrains Mono', monospace; font-size:0.7rem; color:var(--vpp-emerald); margin-bottom:1.1rem;">
+          vLLM INFERENCE & VPP DER ENGINE
+        </div>
+
+        <div class="spec-row"><span>GATEWAY PROTOCOL:</span><strong style="color:var(--electric-cyan);">OIDC SSO + mTLS 1.3</strong></div>
+        <div class="spec-row"><span>INFERENCE ENGINE:</span><strong>vLLM PagedAttention</strong></div>
+        <div class="spec-row"><span>DATA RETENTION:</span><strong style="color:var(--vpp-emerald);">0% (Strict ZDR)</strong></div>
+        <div class="spec-row"><span>IAC ORCHESTRATOR:</span><strong>OpenTofu Multi-Region</strong></div>
+        <div class="spec-row"><span>VPP DER CAPACITY:</span><strong style="color:var(--peppol-amber);">+25,000 mW Modular</strong></div>
+        <div class="spec-row"><span>WHOLESALE CLEARING:</span><strong>PEPPOL UBL 3.0</strong></div>
+      </div>
+
+      <div style="background:#040914; padding:0.95rem; border-radius:10px; border:1px solid var(--border-core);">
+        <div style="display:flex; justify-content:space-between; font-family:'JetBrains Mono', monospace; font-size:0.72rem; margin-bottom:0.4rem;">
+          <span style="color:var(--electric-cyan);">CAUDAL TOKENS / VPP:</span>
+          <strong id="throughput-lbl">18,400 tok/s</strong>
+        </div>
+        <input type="range" id="flux-slider" min="1" max="10" value="6" style="width:100%; accent-color:var(--electric-cyan);" />
+      </div>
+    </aside>
+
+    <!-- Panel Central: Topología Dirigida OIDC -> vLLM -> VPP Grid en Tiempo Real -->
+    <section class="stage-panel">
+      <canvas id="core-topology-canvas"></canvas>
+
+      <div class="hud-bar-top">
+        <div>TOPOLOGY [OIDC SSO ➔ vLLM TENSOR RING ➔ +25,000 mW DER VPP] // <span style="color:var(--vpp-emerald);">0.42ms RTT</span></div>
+        <div style="display:flex; gap:0.4rem;">
+          <button class="mode-btn active" onclick="setTopology('vllm', this)">vLLM MESH</button>
+          <button class="mode-btn" onclick="setTopology('vpp', this)">VPP +25,000 mW</button>
+          <button class="mode-btn" onclick="setTopology('peppol', this)">PEPPOL UBL 3.0</button>
+        </div>
+      </div>
+
+      <div class="stage-overlay">
+        <h1>Pasarela Empresarial <span class="cyan-grad">OIDC + vLLM</span> & Despacho VPP Multi-Región</h1>
+        <p style="color:#cbd5e1; max-width:640px; margin:0 auto; font-size:0.95rem;">
+          Enrutamiento soberano de modelos LLM con retención cero de datos, aprovisionamiento declarativo OpenTofu IaC y liquidación energética mayorista auditada en libro mayor WORM.
+        </p>
+      </div>
+
+      <div class="hud-bar-bottom">
+        <div>WORM LEDGER: <span style="color:var(--vpp-emerald);">HMAC-SHA256 SYNCED</span></div>
+        <div>HOLDING ROYALTY: <strong>15.0% IRC § 482</strong> • STRIPE TAX: <code>txcd_10103001</code> (FL EXEMPT)</div>
+      </div>
+    </section>
+
+    <!-- Panel Derecho: Simulador Financiero VPP Performance Share (21%) & SLA -->
+    <aside class="dock-panel">
+      <div>
+        <div style="font-family:'JetBrains Mono', monospace; font-size:0.74rem; color:var(--peppol-amber); margin-bottom:0.75rem;">
+          ⚡ TELEMETRÍA WORM & PERFORMANCE SHARE
+        </div>
+        <p style="font-size:0.83rem; color:var(--text-dim); margin-bottom:1rem;">
+          Monitoreo inmutable para planes SaaS recurrentes (IRC 5000H), expansión de nodos DER (+25,000 mW) y liquidación del 21% de ahorro energético generado.
+        </p>
+        <div class="spec-row"><span>ENTIDAD LICENCIANTE:</span><strong>Standard 1979 LLC</strong></div>
+        <div class="spec-row"><span>EXENCIÓN FLORIDA:</span><strong style="color:var(--vpp-emerald);">R. 12A-1.032 SaaS</strong></div>
+        <div class="spec-row"><span>GRUPO CONTROLADO:</span><strong>IRC § 414 / § 1563</strong></div>
+        <div class="spec-row"><span>UPTIME SLA:</span><strong style="color:var(--electric-cyan);">99.999% Multi-Zona</strong></div>
+      </div>
+
+      <a href="#catalogo-core" class="btn-core">Ver los 10 SKUs Oficiales ↓</a>
+    </aside>
+  </div>
+
+  <!-- Catálogo Completo de los 10 SKUs de AuraIntel en Stripe -->
+  <section id="catalogo-core" class="catalog-wrap">
+    <div style="display:flex; justify-content:space-between; align-items:flex-end; border-bottom:1px solid var(--border-core); padding-bottom:0.8rem;">
+      <div>
+        <h2 style="font-family:'Space Grotesk', sans-serif; font-size:1.85rem;">
+          Catálogo Oficial AuraIntelCore (10 SKUs Activos en Stripe)
+        </h2>
+        <p style="color:var(--text-dim); font-size:0.88rem;">
+          Todos los productos cuentan con código fiscal <code>txcd_10103001</code> (100% Exentos de Sales Tax en Florida bajo Fla. Admin. Code R. 12A-1.032).
+        </p>
+      </div>
+      <div style="font-family:'JetBrains Mono', monospace; font-size:0.75rem; color:var(--vpp-emerald);">
+        CUENTA STRIPE: acct_1UYSNeAMVKJK8xcd
+      </div>
+    </div>
+
+    <div class="sku-grid">
+      <div class="sku-card">
+        <div>
+          <div class="sku-code">SKU: AURAINTEL-VPP-PRO • txcd_10103001</div>
+          <h3>AuraIntel VPP Pro — Suscripción Mensual (SaaS)</h3>
+          <div class="sku-price">$49.99 <span>USD / mes</span></div>
+          <p style="font-size:0.84rem; color:var(--text-dim);">
+            Acceso al panel de telemetría energética VPP Pro, pronóstico algorítmico de carga y alertas de despacho en tiempo real.
+          </p>
+        </div>
+        <a href="https://buy.stripe.com/5kQ28rgu62U04Qf46ScjS1s" target="_blank" rel="noopener noreferrer" class="btn-core">Activar VPP Pro</a>
+      </div>
+
+      <div class="sku-card">
+        <div>
+          <div class="sku-code">SKU: AURAINTEL-DER-25MW • txcd_10103001</div>
+          <h3>AuraIntel VPP — Expansión Nodo DER Adicional (+25,000 mW)</h3>
+          <div class="sku-price">$99.99 <span>USD / mes</span></div>
+          <p style="font-size:0.84rem; color:var(--text-dim);">
+            Módulo de expansión de capacidad para recursos energéticos distribuidos (+25,000 mW) sincronizado con telemetría WORM.
+          </p>
+        </div>
+        <a href="https://buy.stripe.com/28E4gzelYeCI96v9rccjS1q" target="_blank" rel="noopener noreferrer" class="btn-core">Añadir Nodo +25,000 mW</a>
+      </div>
+
+      <div class="sku-card">
+        <div>
+          <div class="sku-code">SKU: AURAINTEL-PERF-21 • txcd_10103001</div>
+          <h3>AuraIntel VPP Performance Share — 21% del Ahorro Generado (Telemetría WORM)</h3>
+          <div class="sku-price">$199.00 <span>USD / mes base</span></div>
+          <p style="font-size:0.84rem; color:var(--text-dim);">
+            Esquema auditado de participación en el ahorro energético (21% Performance Share) con medición certificada en libro WORM.
+          </p>
+        </div>
+        <a href="https://buy.stripe.com/00waEX2Dg9io1E3dHscjS1d" target="_blank" rel="noopener noreferrer" class="btn-core">Suscribir Performance Share</a>
+      </div>
+
+      <div class="sku-card">
+        <div>
+          <div class="sku-code">SKU: AURAINTEL-STARTUP • txcd_10103001</div>
+          <h3>AuraIntel SaaS — Plan Startup & PyME (Mensual)</h3>
+          <div class="sku-price">$299.00 <span>USD / mes</span></div>
+          <p style="font-size:0.84rem; color:var(--text-dim);">
+            Instancia empresarial SaaS para equipos ágiles con inferencia privada Zero Data Retention y observabilidad JSON.
+          </p>
+        </div>
+        <a href="https://buy.stripe.com/28EbJ1b9MeCI0zZ46ScjS1h" target="_blank" rel="noopener noreferrer" class="btn-core">Activar Plan Startup</a>
+      </div>
+
+      <div class="sku-card flagship">
+        <div>
+          <div class="sku-code" style="color:var(--vpp-emerald);">SKU: AIC-LLM-GW • DESTACADO</div>
+          <h3>Enterprise OIDC SSO + vLLM Gateway & Core Multi-Nodo</h3>
+          <div class="sku-price">$499.00 <span>USD / mes</span></div>
+          <p style="font-size:0.84rem; color:var(--text-dim);">
+            Pasarela de inferencia dedicada vLLM con autenticación federada OIDC SSO, mTLS estricto y licencia B2B Multi-Nodo.
+          </p>
+        </div>
+        <a href="https://buy.stripe.com/5kQ14n4Lo7agbeD46ScjS14" target="_blank" rel="noopener noreferrer" class="btn-core" style="background:var(--vpp-emerald);">Contratar vLLM Gateway</a>
+      </div>
+
+      <div class="sku-card">
+        <div>
+          <div class="sku-code">SKU: AURAINTEL-MIDMARKET • txcd_10103001</div>
+          <h3>AuraIntel SaaS — Plan Mid-Market B2B (Mensual)</h3>
+          <div class="sku-price">$1,499.00 <span>USD / mes</span></div>
+          <p style="font-size:0.84rem; color:var(--text-dim);">
+            Capacidad dedicada para medianas empresas con aislamiento eBPF, pipelines automatizados y soporte de ingeniería 24/7.
+          </p>
+        </div>
+        <a href="https://buy.stripe.com/8x26oHfq23Y45UjgTEcjS1g" target="_blank" rel="noopener noreferrer" class="btn-core">Escalar a Mid-Market</a>
+      </div>
+
+      <div class="sku-card flagship">
+        <div>
+          <div class="sku-code" style="color:var(--vpp-emerald);">SKU: AURAINTEL-OPENTOFU-IAC • CLOUD</div>
+          <h3>AuraIntel — Despliegue Cloud Dedicado Multi-Región (OpenTofu IaC)</h3>
+          <div class="sku-price">$2,500.00 <span>USD / mes</span></div>
+          <p style="font-size:0.84rem; color:var(--text-dim);">
+            Infraestructura dedicada multi-región aprovisionada con OpenTofu IaC, conmutación automática y cumplimiento HIPAA/SOC 2.
+          </p>
+        </div>
+        <a href="https://buy.stripe.com/aFabJ16Tw9ioaazeLwcjS1p" target="_blank" rel="noopener noreferrer" class="btn-core" style="background:var(--vpp-emerald);">Aprovisionar Cloud IaC</a>
+      </div>
+
+      <div class="sku-card">
+        <div>
+          <div class="sku-code">SKU: AURAINTEL-IRC5000H • txcd_10103001</div>
+          <h3>AuraIntel B2B SaaS — Suscripción Mensual Recurrente (IRC 5000H)</h3>
+          <div class="sku-price">$4,875.00 <span>USD / mes</span></div>
+          <p style="font-size:0.84rem; color:var(--text-dim);">
+            Licencia corporativa de alto caudal con trazabilidad normativa IRC 5000H, nodos de telemetría dedicados y SLA 99.999%.
+          </p>
+        </div>
+        <a href="https://buy.stripe.com/6oU7sL1zc9io5UjavgcjS1k" target="_blank" rel="noopener noreferrer" class="btn-core">Activar Plan Enterprise</a>
+      </div>
+
+      <div class="sku-card whale">
+        <div>
+          <div class="sku-code" style="color:var(--peppol-amber);">SKU: AURAINTEL-OMNI-414 • GRUPO CONTROLADO</div>
+          <h3>AuraIntel Omni — Licencia Corporativa Grupo Controlado (IRC 414/1563)</h3>
+          <div class="sku-price" style="color:var(--peppol-amber);">$10,000.00 <span>USD / mes o año</span></div>
+          <p style="font-size:0.84rem; color:var(--text-dim);">
+            Licencia corporativa integral para todas las filiales de un Grupo Controlado bajo IRC § 414/1563 (Modalidad Mensual o Anual).
+          </p>
+        </div>
+        <a href="https://buy.stripe.com/fZuaEX2Dg8ek4QfavgcjS1o" target="_blank" rel="noopener noreferrer" class="btn-core" style="background:var(--peppol-amber);">Contratar Licencia Omni</a>
+      </div>
+
+      <div class="sku-card whale">
+        <div>
+          <div class="sku-code" style="color:var(--peppol-amber);">SKU: AURAINTEL-PEPPOL-VPP • WHOLESALE</div>
+          <h3>AuraIntel SaaS — Plan Mayorista VPP & Liquidación PEPPOL UBL 3.0</h3>
+          <div class="sku-price" style="color:var(--peppol-amber);">$29,250.00 <span>USD / mes</span></div>
+          <p style="font-size:0.84rem; color:var(--text-dim);">
+            Plataforma mayorista completa para holdings energéticos y liquidación electrónica internacional PEPPOL UBL 3.0.
+          </p>
+        </div>
+        <a href="https://buy.stripe.com/bJe14nfq2fGM6Yn7j4cjS1f" target="_blank" rel="noopener noreferrer" class="btn-core" style="background:var(--peppol-amber);">Activar Liquidación Mayorista</a>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    // Motor Gráfico de Topología de Anillo Tensor vLLM y Enrutamiento de Paquetes
+    const canvas = document.getElementById('core-topology-canvas');
+    const ctx = canvas.getContext('2d');
+    let cw, ch, tick = 0, mode = 'vllm';
+    const fluxSlider = document.getElementById('flux-slider');
+    const throughputLbl = document.getElementById('throughput-lbl');
+
+    function setTopology(m, btn) {
+      mode = m;
+      document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    }
+
+    function resize() {
+      cw = canvas.width = canvas.clientWidth;
+      ch = canvas.height = canvas.clientHeight;
+    }
+    window.addEventListener('resize', resize);
+    resize();
+
+    fluxSlider.addEventListener('input', () => {
+      const v = parseInt(fluxSlider.value, 10);
+      throughputLbl.textContent = `${(v * 3100).toLocaleString('en-US')} tok/s`;
+    });
+
+    function drawTopology() {
+      ctx.fillStyle = '#040917';
+      ctx.fillRect(0, 0, cw, ch);
+
+      const cx = cw / 2, cy = ch / 2;
+      const spd = parseInt(fluxSlider.value, 10) * 0.008;
+      tick += spd;
+
+      const ringColor = mode === 'vllm' ? '#00f0ff' : (mode === 'vpp' ? '#00ff9d' : '#fbbf24');
+      const nodeCount = mode === 'vllm' ? 8 : (mode === 'vpp' ? 12 : 6);
+      const radius = Math.min(cw, ch) * 0.31;
+
+      const ringNodes = [];
+      for (let i = 0; i < nodeCount; i++) {
+        const ang = (i / nodeCount) * Math.PI * 2 + tick * 0.35;
+        ringNodes.push({
+          x: cx + Math.cos(ang) * radius,
+          y: cy + Math.sin(ang) * (radius * 0.62)
+        });
+      }
+
+      // Conexiones de malla completa entre nodos del anillo
+      for (let i = 0; i < ringNodes.length; i++) {
+        for (let j = i + 1; j < ringNodes.length; j++) {
+          ctx.beginPath();
+          ctx.moveTo(ringNodes[i].x, ringNodes[i].y);
+          ctx.lineTo(ringNodes[j].x, ringNodes[j].y);
+          ctx.strokeStyle = mode === 'vllm' ? 'rgba(0, 240, 255, 0.16)' : (mode === 'vpp' ? 'rgba(0, 255, 157, 0.16)' : 'rgba(251, 191, 36, 0.2)');
+          ctx.lineWidth = 1;
+          ctx.stroke();
+        }
+      }
+
+      // Nodos y pulsos de inferencia hacia el núcleo central
+      ringNodes.forEach((n, idx) => {
+        const t = (tick * 1.4 + idx * 0.15) % 1;
+        const px = n.x + (cx - n.x) * t;
+        const py = n.y + (cy - n.y) * t;
+
+        ctx.beginPath();
+        ctx.arc(px, py, 2.8, 0, Math.PI * 2);
+        ctx.fillStyle = '#ffffff';
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.arc(n.x, n.y, 6, 0, Math.PI * 2);
+        ctx.fillStyle = ringColor;
+        ctx.fill();
+      });
+
+      // Núcleo Central OIDC / WORM
+      ctx.beginPath();
+      ctx.arc(cx, cy, 24, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(8, 16, 33, 0.9)';
+      ctx.fill();
+      ctx.lineWidth = 2.2;
+      ctx.strokeStyle = ringColor;
+      ctx.stroke();
+
+      requestAnimationFrame(drawTopology);
+    }
+    drawTopology();
+  </script>
+</body>
+</html>

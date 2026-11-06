@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AURATETRAX // INDUSTRIAL eBPF MICROVM KERNEL & 1.5 MW VPP SCADA CONTROL</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Share+Tech+Mono&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --chassis: #07080a;
+      --panel: #0e1116;
+      --panel-hi: #151a22;
+      --reactor: #ff5500;
+      --amber: #ffb000;
+      --phosphor: #00ff66;
+      --steel: #262d3a;
+      --text-hi: #f1f5f9;
+      --text-dim: #7c899e;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background-color: var(--chassis);
+      color: var(--text-hi);
+      font-family: 'Space Grotesk', sans-serif;
+      background-image:
+        linear-gradient(to right, rgba(255, 85, 0, 0.04) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 85, 0, 0.04) 1px, transparent 1px);
+      background-size: 32px 32px;
+      overflow-x: hidden;
+    }
+
+    /* Barra Industrial de Conmutación */
+    .scada-topbar {
+      background: #030405;
+      border-bottom: 2px solid var(--reactor);
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.76rem;
+      padding: 0.55rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .scada-topbar a {
+      color: var(--text-dim);
+      text-decoration: none;
+      padding: 0.25rem 0.65rem;
+      border: 1px solid var(--steel);
+      margin-left: 0.4rem;
+    }
+
+    .scada-topbar a.active {
+      background: var(--reactor);
+      color: #000;
+      font-weight: 700;
+      border-color: var(--reactor);
+    }
+
+    /* Layout de Misión con Barra Lateral Técnica Fija */
+    .scada-shell {
+      display: grid;
+      grid-template-columns: 270px 1fr;
+      min-height: calc(100vh - 42px);
+    }
+
+    .scada-sidebar {
+      background: #090b0f;
+      border-right: 1px solid var(--steel);
+      padding: 1.5rem 1.25rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      font-family: 'Share Tech Mono', monospace;
+    }
+
+    .brand-brutal {
+      border-left: 4px solid var(--reactor);
+      padding-left: 0.75rem;
+      margin-bottom: 2rem;
+    }
+
+    .brand-brutal h1 {
+      font-family: 'Chakra Petch', sans-serif;
+      font-size: 1.45rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-hi);
+    }
+
+    .brand-brutal span {
+      font-size: 0.7rem;
+      color: var(--reactor);
+    }
+
+    .side-nav {
+      list-style: none;
+      margin-bottom: 2rem;
+    }
+
+    .side-nav li { margin-bottom: 0.5rem; }
+
+    .side-nav a {
+      display: block;
+      padding: 0.65rem 0.8rem;
+      background: var(--panel);
+      border: 1px solid var(--steel);
+      color: var(--text-hi);
+      text-decoration: none;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      transition: all 0.15s;
+    }
+
+    .side-nav a:hover {
+      border-color: var(--reactor);
+      color: var(--reactor);
+      padding-left: 1.1rem;
+    }
+
+    .telemetry-gauge {
+      background: var(--panel);
+      border: 1px solid var(--steel);
+      padding: 0.9rem;
+      margin-bottom: 0.8rem;
+      font-size: 0.74rem;
+    }
+
+    .gauge-bar {
+      height: 6px;
+      background: #1c222d;
+      margin-top: 0.45rem;
+      overflow: hidden;
+    }
+
+    .gauge-fill {
+      height: 100%;
+      background: var(--reactor);
+      width: 78%;
+    }
+
+    /* Panel Central de Operaciones */
+    .scada-main {
+      padding: 2rem 2.5rem;
+    }
+
+    .command-banner {
+      background: var(--panel);
+      border: 1px solid var(--steel);
+      border-left: 6px solid var(--reactor);
+      padding: 2.2rem;
+      margin-bottom: 2rem;
+      display: grid;
+      grid-template-columns: 1.3fr 0.7fr;
+      gap: 2rem;
+      clip-path: polygon(0 0, calc(100% - 22px) 0, 100% 22px, 100% 100%, 0 100%);
+    }
+
+    .sys-tag {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--reactor);
+      background: rgba(255, 85, 0, 0.12);
+      border: 1px solid var(--reactor);
+      padding: 0.2rem 0.6rem;
+      display: inline-block;
+      margin-bottom: 0.9rem;
+    }
+
+    .command-banner h2 {
+      font-family: 'Chakra Petch', sans-serif;
+      font-size: clamp(2rem, 3.6vw, 3.1rem);
+      text-transform: uppercase;
+      line-height: 1.05;
+      margin-bottom: 1rem;
+    }
+
+    .btn-reactor {
+      display: inline-block;
+      background: var(--reactor);
+      color: #000;
+      font-family: 'Share Tech Mono', monospace;
+      font-weight: 700;
+      font-size: 0.86rem;
+      text-transform: uppercase;
+      padding: 0.85rem 1.6rem;
+      text-decoration: none;
+      clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+      cursor: pointer;
+      border: none;
+    }
+
+    .btn-reactor:hover {
+      background: var(--amber);
+    }
+
+    /* Osciloscopio VPP 60Hz + Mapa de Calor de 32 MicroVMs Cilium eBPF */
+    .scada-monitors {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 1.5rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .monitor-box {
+      background: #050608;
+      border: 1px solid var(--steel);
+      padding: 1.25rem;
+    }
+
+    .monitor-header {
+      display: flex;
+      justify-content: space-between;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.76rem;
+      color: var(--amber);
+      border-bottom: 1px solid var(--steel);
+      padding-bottom: 0.6rem;
+      margin-bottom: 1rem;
+    }
+
+    #oscilloscope {
+      width: 100%;
+      height: 170px;
+      background: #020304;
+      border: 1px solid #1a212b;
+      display: block;
+    }
+
+    .microvm-grid {
+      display: grid;
+      grid-template-columns: repeat(8, 1fr);
+      gap: 6px;
+    }
+
+    .vm-cell {
+      background: #0d131a;
+      border: 1px solid #1f2937;
+      padding: 0.45rem 0.2rem;
+      text-align: center;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--phosphor);
+    }
+
+    .vm-cell.hot {
+      background: rgba(255, 85, 0, 0.22);
+      border-color: var(--reactor);
+      color: var(--amber);
+    }
+
+    /* Matriz Industrial de Nodos y Precios (Biselada Brutalista) */
+    .rack-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(305px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .rack-unit {
+      background: var(--panel);
+      border: 1px solid var(--steel);
+      padding: 1.6rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 0 100%);
+    }
+
+    .rack-unit.priority {
+      border-color: var(--reactor);
+      background: linear-gradient(180deg, rgba(255, 85, 0, 0.09) 0%, var(--panel) 100%);
+    }
+
+    .rack-header {
+      display: flex;
+      justify-content: space-between;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--amber);
+      margin-bottom: 0.6rem;
+    }
+
+    .rack-title {
+      font-family: 'Chakra Petch', sans-serif;
+      font-size: 1.22rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      margin-bottom: 0.8rem;
+    }
+
+    .rack-price {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: clamp(1.65rem, 2.1vw, 2.05rem);
+      color: var(--phosphor);
+      white-space: nowrap;
+      background: #05070a;
+      border: 1px solid var(--steel);
+      padding: 0.6rem 0.9rem;
+      margin-bottom: 1rem;
+    }
+
+    .rack-price span {
+      font-size: 0.78rem;
+      color: var(--text-dim);
+    }
+
+    .rack-specs {
+      list-style: none;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.78rem;
+      color: #cbd5e1;
+      margin-bottom: 1.4rem;
+    }
+
+    .rack-specs li {
+      margin-bottom: 0.5rem;
+    }
+
+    .rack-specs li::before {
+      content: "[+] ";
+      color: var(--reactor);
+    }
+
+    @media (max-width: 980px) {
+      .scada-shell, .command-banner, .scada-monitors { grid-template-columns: 1fr; }
+      .scada-sidebar { border-right: none; border-bottom: 1px solid var(--steel); }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="scada-topbar">
+    <div>
+      [SYS_STATUS: ONLINE] // KERNEL: CILIUM eBPF MICROVM // VPP NODE: 1.5 MW LMP DISPATCH
+    </div>
+    <div>
+      <span>CONMUTAR INTERFAZ:</span>
+      <a href="https://standard1979.com">1. standard1979.com (Swiss Bank)</a>
+      <a href="https://auraintelcore.com">2. AuraIntelCore.com (Cyberpunk)</a>
+      <a href="https://auratetrax.com" class="active">3. AuraTetrax</a> <a href="https://auraintelstudios3d.com">4. Studios3D</a> <a href="https://fourphonix.com">5. FourPhonix</a> <a href="https://prophonix.com">6. ProPhonix</a>
+    </div>
+  </div>
+
+  <div class="scada-shell">
+    <!-- Barra Lateral Fija de Telemetría de Kernel y Subestación VPP -->
+    <aside class="scada-sidebar">
+      <div>
+        <div class="brand-brutal">
+          <h1>AURA//TETRAX</h1>
+          <span>AUTONOMOUS PAAS & VPP SCADA</span>
+        </div>
+
+        <ul class="side-nav">
+          <li><a href="#monitors">01 // OSCILOSCOPIO VPP 1.5 MW</a></li>
+          <li><a href="#monitors">02 // MAPA eBPF (32 MICROVMs)</a></li>
+          <li><a href="#racks">03 // UNIDADES DE RACK & SKUs</a></li>
+        </ul>
+
+        <div class="telemetry-gauge">
+          <div style="display:flex; justify-content:space-between;">
+            <span>FRECUENCIA RED VPP:</span>
+            <strong style="color: var(--phosphor);">60.00 Hz</strong>
+          </div>
+          <div class="gauge-bar"><div class="gauge-fill" style="width: 92%; background: var(--phosphor);"></div></div>
+        </div>
+
+        <div class="telemetry-gauge">
+          <div style="display:flex; justify-content:space-between;">
+            <span>CARGA NODO H100 ZDR:</span>
+            <strong style="color: var(--reactor);" id="gpu-load-txt">84.2%</strong>
+          </div>
+          <div class="gauge-bar"><div class="gauge-fill" id="gpu-load-bar" style="width: 84%;"></div></div>
+        </div>
+
+        <div class="telemetry-gauge">
+          <div style="display:flex; justify-content:space-between;">
+            <span>SLSA L3 / mTLS MESH:</span>
+            <strong style="color: var(--amber);">ENFORCED</strong>
+          </div>
+          <div class="gauge-bar"><div class="gauge-fill" style="width: 100%; background: var(--amber);"></div></div>
+        </div>
+      </div>
+
+      <div style="font-size: 0.7rem; color: var(--text-dim); border-top: 1px solid var(--steel); padding-top: 1rem;">
+        LICENCIADO POR:<br/>
+        <strong style="color: var(--text-hi);">STANDARD 1979 HOLDINGS, LLC</strong><br/>
+        IRC § 482 ROYALTY: 15.0%<br/>
+        TAX CODE: txcd_10103001
+      </div>
+    </aside>
+
+    <!-- Consola Industrial Principal -->
+    <main class="scada-main">
+      <section class="command-banner">
+        <div>
+          <span class="sys-tag">KERNEL ISOLATION: CILIUM eBPF // ZERO DATA RETENTION</span>
+          <h2>Orquestación Industrial de Agentes Autónomos y Despacho Energético VPP (1.5 MW)</h2>
+          <p style="color: var(--text-dim); margin-bottom: 1.5rem; max-width: 680px;">
+            Arquitectura bare-metal para ejecución de flujos SOAR de 100,000 herramientas, mallas Kubernetes con atestación SLSA Nivel 3 y arbitraje mayorista de energía LMP (Locational Marginal Pricing) en tiempo real.
+          </p>
+          <a href="#racks" class="btn-reactor">Aprovisionar Unidad de Cómputo // SKU</a>
+        </div>
+        <div style="background:#05070a; border:1px solid var(--steel); padding:1.2rem; font-family:'Share Tech Mono', monospace; font-size:0.76rem;">
+          <div style="color:var(--reactor); margin-bottom:0.5rem;">// REGISTRO DE KERNEL EN VIVO</div>
+          <div>> ebpf_prog_load(ATX_RINGBUF_ISOLATION)... OK</div>
+          <div>> slsa_provenance_verify(v1.2)... OK</div>
+          <div>> vpp_lmp_dispatch(node="1.5MW_DER")... ACTIVE</div>
+          <div>> zdr_memory_sanitize(PRAGMA_ON)... LOCKED</div>
+          <div style="color:var(--phosphor); margin-top:0.6rem;" id="scada-clock">UTC SYNC: ACTIVE</div>
+        </div>
+      </section>
+
+      <!-- Monitores SCADA en Vivo -->
+      <section id="monitors" class="scada-monitors">
+        <div class="monitor-box">
+          <div class="monitor-header">
+            <span>OSCILOSCOPIO DE ARBITRAJE VPP // ONDA SINUSOIDAL 1.5 MW PEAK SHAVING</span>
+            <span style="color: var(--phosphor);">LMP SPREAD: +$42.80/MWh</span>
+          </div>
+          <canvas id="oscilloscope"></canvas>
+        </div>
+
+        <div class="monitor-box">
+          <div class="monitor-header">
+            <span>MATRIZ DE AISLAMIENTO CILIUM eBPF (32 MICROVMs ACTIVAS)</span>
+            <span>RING-0 SANDBOX</span>
+          </div>
+          <div class="microvm-grid" id="vm-matrix"></div>
+        </div>
+      </section>
+
+      <!-- Racks de Contratación (SKUs Oficiales de AuraTetrax en Stripe) -->
+      <section id="racks">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.25rem; border-bottom:1px solid var(--steel); padding-bottom:0.6rem;">
+          <h3 style="font-family:'Chakra Petch', sans-serif; font-size:1.5rem; text-transform:uppercase;">
+            Unidades de Despliegue y Licencias de Hardware/PaaS
+          </h3>
+          <span style="font-family:'Share Tech Mono', monospace; font-size:0.76rem; color:var(--phosphor);">
+            STRIPE TAX: txcd_10103001 (FL SAAS EXEMPT)
+          </span>
+        </div>
+
+        <div class="rack-grid">
+          <div class="rack-unit">
+            <div>
+              <div class="rack-header"><span>UNIT-01</span><span>SKU: ATX-PAAS-START</span></div>
+              <div class="rack-title">Startup Agentic PaaS (5 Agents + Cilium eBPF MicroVMs)</div>
+              <div class="rack-price">$299.00 <span>USD / MES</span></div>
+              <ul class="rack-specs">
+                <li>5 Agentes autónomos aislados por eBPF</li>
+                <li>MicroVMs efímeras con arranque en 12ms</li>
+                <li>Telemetría JSON firmada con SHA-256</li>
+              </ul>
+            </div>
+            <a href="https://buy.stripe.com/eVqfZh7XAcuA0zZ5aWcjS10" target="_blank" rel="noopener noreferrer" class="btn-reactor" style="text-align:center;">MONTAR UNIT-01</a>
+          </div>
+
+          <div class="rack-unit">
+            <div>
+              <div class="rack-header"><span>UNIT-02</span><span>SKU: ATX-EXE-SOAR</span></div>
+              <div class="rack-title">Autonomous Workflow Pack (100k Tool Executions + SOAR)</div>
+              <div class="rack-price">$450.00 <span>USD / MES</span></div>
+              <ul class="rack-specs">
+                <li>100,000 ejecuciones deterministas de herramientas</li>
+                <li>Orquestación de remediación autónoma SOAR</li>
+                <li>Integración con libro mayor WORM IRC § 482</li>
+              </ul>
+            </div>
+            <a href="https://buy.stripe.com/dRm4gzfq266c5UjcDocjS0Z" target="_blank" rel="noopener noreferrer" class="btn-reactor" style="text-align:center;">MONTAR UNIT-02</a>
+          </div>
+
+          <div class="rack-unit priority">
+            <div>
+              <div class="rack-header"><span>UNIT-03 // DESTACADO</span><span>SKU: ATRX-PAAS-NODE</span></div>
+              <div class="rack-title">Modular Agentic PaaS Cluster (Dedicated Node)</div>
+              <div class="rack-price">$899.00 <span>USD / MES</span></div>
+              <ul class="rack-specs">
+                <li>Clúster modular dedicado de agentes en enjambre</li>
+                <li>Enrutamiento mTLS de ultra-baja latencia</li>
+                <li>Memoria vectorial dedicada sin retención</li>
+              </ul>
+            </div>
+            <a href="https://buy.stripe.com/8x24gz6Tw2U04QfeLwcjS13" target="_blank" rel="noopener noreferrer" class="btn-reactor" style="text-align:center;">MONTAR UNIT-03</a>
+          </div>
+
+          <div class="rack-unit">
+            <div>
+              <div class="rack-header"><span>UNIT-04</span><span>SKU: ATX-PAAS-MESH</span></div>
+              <div class="rack-title">Enterprise Kubernetes Mesh (Dedicated mTLS + SLSA L3)</div>
+              <div class="rack-price">$1,499.00 <span>USD / MES</span></div>
+              <ul class="rack-specs">
+                <li>Malla Kubernetes endurecida con SLSA Nivel 3</li>
+                <li>Políticas de admisión OPA Rego en tiempo real</li>
+                <li>plano de control aislado multi-zona</li>
+              </ul>
+            </div>
+            <a href="https://buy.stripe.com/3cI4gzdhU0LS3MbdHscjS0Y" target="_blank" rel="noopener noreferrer" class="btn-reactor" style="text-align:center;">MONTAR UNIT-04</a>
+          </div>
+
+          <div class="rack-unit priority">
+            <div>
+              <div class="rack-header"><span>UNIT-05 // BARE-METAL GPU</span><span>SKU: ATX-GPU-NODE</span></div>
+              <div class="rack-title">Dedicated GPU Inference Node (Zero Data Retention)</div>
+              <div class="rack-price">$2,950.00 <span>USD / MES</span></div>
+              <ul class="rack-specs">
+                <li>Nodo GPU dedicado con 100% Zero Data Retention</li>
+                <li>Purga criptográfica de VRAM tras cada inferencia</li>
+                <li>Cumplimiento estricto HIPAA / GDPR / SOC 2</li>
+              </ul>
+            </div>
+            <a href="https://buy.stripe.com/dRm8wP91E9iofuTeLwcjS0X" target="_blank" rel="noopener noreferrer" class="btn-reactor" style="text-align:center;">MONTAR UNIT-05</a>
+          </div>
+
+          <div class="rack-unit">
+            <div>
+              <div class="rack-header"><span>UNIT-06 // ENERGÍA VPP</span><span>SKU: VPP-1.5MW-LMP</span></div>
+              <div class="rack-title">Aura-Tetrax VPP — Arbitraje Mayorista LMP & Peak Shaving (1.5 MW)</div>
+              <div class="rack-price">$399.00 <span>USD / MES</span></div>
+              <ul class="rack-specs">
+                <li>Despacho automático de nodos de 1.5 MW</li>
+                <li>Arbitraje mayorista LMP y Reserva Rodante</li>
+                <li>Modalidad Peak Shaving B2B ($299/mes disp.)</li>
+              </ul>
+            </div>
+            <a href="https://buy.stripe.com/9B600jdhU5283Mb1YKcjS1l" target="_blank" rel="noopener noreferrer" class="btn-reactor" style="text-align:center;">MONTAR UNIT-06</a>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    // 1. Generar las 32 celdas de MicroVMs Cilium eBPF y animar su carga
+    const vmMatrix = document.getElementById('vm-matrix');
+    const cells = [];
+    for (let i = 1; i <= 32; i++) {
+      const div = document.createElement('div');
+      div.className = 'vm-cell';
+      div.textContent = `VM-${String(i).padStart(2, '0')}`;
+      vmMatrix.appendChild(div);
+      cells.push(div);
+    }
+
+    setInterval(() => {
+      cells.forEach(c => {
+        if (Math.random() > 0.78) {
+          c.classList.add('hot');
+        } else {
+          c.classList.remove('hot');
+        }
+      });
+      const load = (78 + Math.random() * 16).toFixed(1);
+      document.getElementById('gpu-load-txt').textContent = `${load}%`;
+      document.getElementById('gpu-load-bar').style.width = `${load}%`;
+      document.getElementById('scada-clock').textContent = `UTC: ${new Date().toISOString()}`;
+    }, 900);
+
+    // 2. Osciloscopio Industrial de Onda Sinusoidal Doble (VPP 60Hz + Peak Shaving)
+    const osc = document.getElementById('oscilloscope');
+    const octx = osc.getContext('2d');
+    let phase = 0;
+
+    function resizeOsc() {
+      osc.width = osc.clientWidth;
+      osc.height = osc.clientHeight;
+    }
+    window.addEventListener('resize', resizeOsc);
+    resizeOsc();
+
+    function renderOscilloscope() {
+      const w = osc.width;
+      const h = osc.height;
+      octx.fillStyle = '#020304';
+      octx.fillRect(0, 0, w, h);
+
+      // Rejilla del osciloscopio
+      octx.strokeStyle = 'rgba(255, 255, 255, 0.05)';
+      octx.lineWidth = 1;
+      for (let x = 0; x < w; x += 30) {
+        octx.beginPath(); octx.moveTo(x, 0); octx.lineTo(x, h); octx.stroke();
+      }
+      for (let y = 0; y < h; y += 30) {
+        octx.beginPath(); octx.moveTo(0, y); octx.lineTo(w, y); octx.stroke();
+      }
+
+      // Onda 1: Frecuencia nominal 60Hz (Verde Fósforo)
+      octx.beginPath();
+      for (let x = 0; x < w; x++) {
+        const y = h / 2 + Math.sin((x * 0.035) + phase) * (h * 0.32);
+        if (x === 0) octx.moveTo(x, y);
+        else octx.lineTo(x, y);
+      }
+      octx.strokeStyle = '#00ff66';
+      octx.lineWidth = 2;
+      octx.stroke();
+
+      // Onda 2: Despacho de Arbitraje LMP / Peak Shaving (Naranja Reactor)
+      octx.beginPath();
+      for (let x = 0; x < w; x++) {
+        const y = h / 2 + Math.cos((x * 0.022) - phase * 1.3) * (h * 0.22);
+        if (x === 0) octx.moveTo(x, y);
+        else octx.lineTo(x, y);
+      }
+      octx.strokeStyle = '#ff5500';
+      octx.lineWidth = 1.8;
+      octx.stroke();
+
+      phase += 0.09;
+      requestAnimationFrame(renderOscilloscope);
+    }
+    renderOscilloscope();
+  </script>
+</body>
+</html>

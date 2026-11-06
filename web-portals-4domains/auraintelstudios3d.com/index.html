@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AuraIntelStudios3D | NVIDIA H100 Generative 3D, Digital Twins & C2PA v2.1 Notary</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --studio-bg: #08040f;
+      --studio-dock: rgba(18, 10, 31, 0.85);
+      --studio-card: rgba(25, 14, 42, 0.72);
+      --magenta: #ff2a85;
+      --violet: #9d4edd;
+      --c2pa-gold: #ffd166;
+      --cyan-3d: #00f5d4;
+      --text-light: #f8f7ff;
+      --text-muted: #a39bb5;
+      --border-3d: rgba(157, 78, 221, 0.28);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background-color: var(--studio-bg);
+      color: var(--text-light);
+      font-family: 'Outfit', sans-serif;
+      background-image: radial-gradient(circle at 50% 0%, rgba(255, 42, 133, 0.14) 0%, rgba(157, 78, 221, 0.1) 45%, transparent 75%);
+      overflow-x: hidden;
+    }
+
+    /* Cinta Global de los 6 Portales */
+    .omni-bar {
+      background: #040208;
+      border-bottom: 1px solid var(--border-3d);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      padding: 0.55rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .omni-bar a {
+      color: var(--text-muted);
+      text-decoration: none;
+      padding: 0.2rem 0.55rem;
+      border-radius: 4px;
+      border: 1px solid rgba(255,255,255,0.1);
+      margin-left: 0.3rem;
+    }
+
+    .omni-bar a.active {
+      background: linear-gradient(90deg, var(--magenta), var(--violet));
+      color: #fff;
+      border-color: transparent;
+      font-weight: 700;
+    }
+
+    /* Viewport 3D Interactivo Estilo Motor Gráfico (Houdini / Unreal) */
+    .studio-workspace {
+      max-width: 1400px;
+      margin: 1.5rem auto;
+      padding: 0 1.5rem;
+      display: grid;
+      grid-template-columns: 310px 1fr 290px;
+      gap: 1.25rem;
+    }
+
+    .inspector-panel {
+      background: var(--studio-dock);
+      border: 1px solid var(--border-3d);
+      border-radius: 16px;
+      padding: 1.4rem;
+      backdrop-filter: blur(18px);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .viewport-stage {
+      background: #05020a;
+      border: 1px solid rgba(255, 42, 133, 0.45);
+      border-radius: 18px;
+      position: relative;
+      overflow: hidden;
+      min-height: 490px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-shadow: 0 0 50px rgba(255, 42, 133, 0.12);
+    }
+
+    #canvas-3d {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+    }
+
+    .viewport-hud-top, .viewport-hud-bottom {
+      position: relative;
+      z-index: 2;
+      padding: 1.25rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: linear-gradient(180deg, rgba(8,4,15,0.85) 0%, transparent 100%);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.74rem;
+    }
+
+    .viewport-hud-bottom {
+      background: linear-gradient(0deg, rgba(8,4,15,0.92) 0%, transparent 100%);
+    }
+
+    .viewport-center-overlay {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      padding: 2rem;
+      pointer-events: none;
+    }
+
+    .viewport-center-overlay h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(2rem, 3.6vw, 3.2rem);
+      font-weight: 800;
+      line-height: 1.08;
+      text-shadow: 0 8px 30px rgba(0,0,0,0.9);
+      margin-bottom: 0.75rem;
+    }
+
+    .grad-3d {
+      background: linear-gradient(90deg, #fff, var(--magenta), var(--c2pa-gold));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .shader-btn {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid var(--border-3d);
+      color: var(--text-light);
+      padding: 0.4rem 0.75rem;
+      border-radius: 6px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      cursor: pointer;
+    }
+
+    .shader-btn.active {
+      background: var(--magenta);
+      border-color: var(--magenta);
+      color: #fff;
+    }
+
+    .prop-row {
+      display: flex;
+      justify-content: space-between;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      padding: 0.55rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+
+    /* Catálogo de los 5 SKUs AIS3D-* en Stripe */
+    .catalog-section {
+      max-width: 1400px;
+      margin: 3.5rem auto;
+      padding: 0 1.5rem;
+    }
+
+    .studio-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.25rem;
+      margin-top: 2rem;
+    }
+
+    .studio-card {
+      background: var(--studio-card);
+      border: 1px solid var(--border-3d);
+      border-radius: 18px;
+      padding: 1.75rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: transform 0.25s ease, border-color 0.25s ease;
+    }
+
+    .studio-card:hover {
+      transform: translateY(-5px);
+      border-color: var(--magenta);
+    }
+
+    .studio-card.featured {
+      border-color: var(--c2pa-gold);
+      box-shadow: 0 0 30px rgba(255, 209, 102, 0.12);
+    }
+
+    .sku-pill {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--c2pa-gold);
+      margin-bottom: 0.45rem;
+    }
+
+    .studio-price {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: clamp(1.55rem, 2vw, 1.95rem);
+      font-weight: 700;
+      white-space: nowrap;
+      margin: 0.85rem 0;
+      color: var(--cyan-3d);
+    }
+
+    .studio-price span {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .btn-studio {
+      display: block;
+      text-align: center;
+      background: linear-gradient(135deg, var(--magenta), var(--violet));
+      color: #fff;
+      text-decoration: none;
+      padding: 0.75rem 1rem;
+      border-radius: 10px;
+      font-weight: 600;
+      font-size: 0.85rem;
+      margin-top: 1.2rem;
+    }
+
+    @media (max-width: 1080px) {
+      .studio-workspace { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="omni-bar">
+    <div>
+      <strong>AURAINTEL STUDIOS 3D</strong> • NVIDIA H100 CLUSTER & C2PA v2.1 CRYPTOGRAPHIC PROVENANCE
+    </div>
+    <div>
+      <a href="https://standard1979.com">8091: Standard1979</a>
+      <a href="https://auraintelcore.com">8090: AuraIntelCore</a>
+      <a href="https://auratetrax.com">8092: AuraTetrax</a>
+      <a href="https://auraintelstudios3d.com" class="active">8093: Studios3D</a>
+      <a href="https://fourphonix.com">8094: FourPhonix</a>
+      <a href="https://prophonix.com">8095: ProPhonix</a>
+    </div>
+  </div>
+
+  <!-- Espacio de Trabajo 3D (Inspector Izquierdo + Viewport 3D Central + Notario C2PA Derecho) -->
+  <div class="studio-workspace">
+    <aside class="inspector-panel">
+      <div>
+        <div style="font-family:'Syne', sans-serif; font-size:1.3rem; font-weight:800; margin-bottom:0.3rem;">
+          AURA<span style="color:var(--magenta);">3D</span> STUDIO
+        </div>
+        <div style="font-family:'JetBrains Mono', monospace; font-size:0.7rem; color:var(--c2pa-gold); margin-bottom:1.2rem;">
+          SCENE GRAPH & H100 RENDER PIPELINE
+        </div>
+
+        <div class="prop-row"><span>GEOMETRY MESH:</span><strong style="color:var(--cyan-3d);">USDZ / glTF 2.0</strong></div>
+        <div class="prop-row"><span>VERTICES / POLYS:</span><strong>2,480,000 Quads</strong></div>
+        <div class="prop-row"><span>GPU ENGINE:</span><strong>8× NVIDIA H100 SXM5</strong></div>
+        <div class="prop-row"><span>RAYTRACING:</span><strong>Path-Traced 60 FPS</strong></div>
+        <div class="prop-row"><span>DIGITAL TWIN SYNC:</span><strong style="color:var(--cyan-3d);">0.8 ms MQTT/gRPC</strong></div>
+      </div>
+
+      <div style="background:rgba(0,0,0,0.35); padding:1rem; border-radius:10px; border:1px solid var(--border-3d);">
+        <div style="font-family:'JetBrains Mono', monospace; font-size:0.72rem; color:var(--magenta); margin-bottom:0.4rem;">
+          CONTROL DE ROTACIÓN 3D
+        </div>
+        <input type="range" id="rot-speed" min="1" max="10" value="4" style="width:100%; accent-color:var(--magenta);" />
+      </div>
+    </aside>
+
+    <!-- Viewport Holográfico 3D en Tiempo Real -->
+    <section class="viewport-stage">
+      <canvas id="canvas-3d"></canvas>
+
+      <div class="viewport-hud-top">
+        <div>VIEWPORT [PERSPECTIVE • 35mm FOCAL] // <span style="color:var(--cyan-3d);">LIVE WEBRENDER</span></div>
+        <div style="display:flex; gap:0.4rem;">
+          <button class="shader-btn active" onclick="setMode('wire')">WIREFRAME</button>
+          <button class="shader-btn" onclick="setMode('points')">POINT CLOUD</button>
+          <button class="shader-btn" onclick="setMode('dual')">C2PA HOLOGRAM</button>
+        </div>
+      </div>
+
+      <div class="viewport-center-overlay">
+        <h1>Generación 3D en <span class="grad-3d">Clústeres H100</span> & Gemelos Digitales C2PA v2.1</h1>
+        <p style="color:#d8d2e7; max-width:620px; margin:0 auto; font-size:0.98rem;">
+          Pipeline industrial Text-to-3D, simulación física de plantas en tiempo real y firma criptográfica de procedencia C2PA v2.1 libre de contaminación de IP.
+        </p>
+      </div>
+
+      <div class="viewport-hud-bottom">
+        <div>C2PA MANIFEST: <span style="color:var(--c2pa-gold);">SIGNED (Ed25519 / SHA-256)</span></div>
+        <div>HOLDING ROYALTY: <strong>15.0% IRC § 482</strong> • TAX: <code>txcd_10103001</code> / <code>txcd_10501000</code></div>
+      </div>
+    </section>
+
+    <aside class="inspector-panel">
+      <div>
+        <div style="font-family:'JetBrains Mono', monospace; font-size:0.74rem; color:var(--c2pa-gold); margin-bottom:0.8rem;">
+          🛡️ NOTARÍA CRIPTOGRÁFICA C2PA v2.1
+        </div>
+        <p style="font-size:0.84rem; color:var(--text-muted); margin-bottom:1rem;">
+          Cada malla `.glTF`, `.USDZ` y `.FBX` generada en AuraIntelStudios3D incluye un manifiesto inmutable de procedencia firmado por <strong>Standard 1979 Holdings, LLC</strong>.
+        </p>
+        <div class="prop-row"><span>ISSUER:</span><strong>Standard 1979 LLC</strong></div>
+        <div class="prop-row"><span>STANDARD:</span><strong>C2PA v2.1 Hard-Binding</strong></div>
+        <div class="prop-row"><span>FL TAX RULE:</span><strong>R. 12A-1.032 Exempt</strong></div>
+      </div>
+
+      <a href="#skus-3d" class="btn-studio">Explorar 5 Licencias 3D ↓</a>
+    </aside>
+  </div>
+
+  <!-- Los 5 SKUs Exactos de AuraIntelStudios3D en tu Catálogo de Stripe -->
+  <section id="skus-3d" class="catalog-section">
+    <h2 style="font-family:'Syne', sans-serif; font-size:2rem; text-align:center;">
+      Catálogo Oficial AuraIntelStudios3D (5 SKUs Activos en Stripe)
+    </h2>
+
+    <div class="studio-grid">
+      <div class="studio-card">
+        <div>
+          <div class="sku-pill">SKU: AIS3D-PACK-INDIE • txcd_10501000</div>
+          <h3>Commercial 3D Asset Pack (glTF/USDZ/FBX + C2PA v2.1)</h3>
+          <div class="studio-price">$149.00 <span>USD / pago único</span></div>
+          <p style="font-size:0.85rem; color:var(--text-muted);">
+            Paquete comercial de activos 3D multi-formato optimizados con certificado criptográfico C2PA v2.1 integrado.
+          </p>
+        </div>
+        <a href="https://buy.stripe.com/bJebJ1dhU528beDfPAcjS0W" target="_blank" rel="noopener noreferrer" class="btn-studio">Adquirir Asset Pack</a>
+      </div>
+
+      <div class="studio-card">
+        <div>
+          <div class="sku-pill">SKU: AIS3D-GPU-STUDIO • txcd_10103001</div>
+          <h3>Cloud GPU 3D Render Studio (Text-to-3D & Render Cluster)</h3>
+          <div class="studio-price">$499.00 <span>USD / mes</span></div>
+          <p style="font-size:0.85rem; color:var(--text-muted);">
+            Estudio en la nube para generación Text-to-3D, retopología automática y renderizado distribuido en clúster GPU.
+          </p>
+        </div>
+        <a href="https://buy.stripe.com/8x26oHgu68ek4QfbzkcjS0V" target="_blank" rel="noopener noreferrer" class="btn-studio">Activar Render Studio</a>
+      </div>
+
+      <div class="studio-card featured">
+        <div>
+          <div class="sku-pill">SKU: AIS3D-H100-C2PA • DESTACADO</div>
+          <h3>NVIDIA H100 3D Generative C2PA Studio</h3>
+          <div class="studio-price">$1,490.00 <span>USD / mes</span></div>
+          <p style="font-size:0.85rem; color:var(--text-muted);">
+            Instancia dedicada acelerada por NVIDIA H100 para síntesis generativa 3D masiva y sellado C2PA en línea.
+          </p>
+        </div>
+        <a href="https://buy.stripe.com/5kQ14n7XA2U0gyXeLwcjS12" target="_blank" rel="noopener noreferrer" class="btn-studio" style="background:linear-gradient(135deg, var(--c2pa-gold), var(--magenta)); color:#000;">Contratar H100 Studio</a>
+      </div>
+
+      <div class="studio-card">
+        <div>
+          <div class="sku-pill">SKU: AIS3D-IND-TWIN • txcd_10103001</div>
+          <h3>Industrial 3D Digital Twin Suite (Real-Time Plant Twin)</h3>
+          <div class="studio-price">$1,850.00 <span>USD / mes</span></div>
+          <p style="font-size:0.85rem; color:var(--text-muted);">
+            Suite empresarial de gemelos digitales en tiempo real para plantas industriales, subestaciones VPP y telemetría IoT.
+          </p>
+        </div>
+        <a href="https://buy.stripe.com/aFacN5cdQgKQaaz46ScjS0U" target="_blank" rel="noopener noreferrer" class="btn-studio">Desplegar Digital Twin</a>
+      </div>
+
+      <div class="studio-card">
+        <div>
+          <div class="sku-pill">SKU: AIS3D-ENT-API • txcd_10103001</div>
+          <h3>Enterprise 3D & Bulk C2PA v2.1 Notary API</h3>
+          <div class="studio-price">$3,500.00 <span>USD / mes</span></div>
+          <p style="font-size:0.85rem; color:var(--text-muted);">
+            API empresarial de alto volumen para estudios y plataformas que requieren notarización masiva C2PA v2.1 y pipeline 3D.
+          </p>
+        </div>
+        <a href="https://buy.stripe.com/aFadR91zc3Y43Mb32OcjS0T" target="_blank" rel="noopener noreferrer" class="btn-studio">Conectar Enterprise API</a>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    // Motor de Proyección 3D Rotatorio en Tiempo Real (Toroide Paramétrico 3D)
+    const canvas = document.getElementById('canvas-3d');
+    const ctx = canvas.getContext('2d');
+    let w, h, angleX = 0, angleY = 0, renderMode = 'wire';
+    const speedSlider = document.getElementById('rot-speed');
+
+    function setMode(m) {
+      renderMode = m;
+      document.querySelectorAll('.shader-btn').forEach(b => b.classList.remove('active'));
+      event.target.classList.add('active');
+    }
+
+    function resize() {
+      w = canvas.width = canvas.clientWidth;
+      h = canvas.height = canvas.clientHeight;
+    }
+    window.addEventListener('resize', resize);
+    resize();
+
+    const vertices = [];
+    const R = 135, r = 58, segU = 28, segV = 16;
+    for (let i = 0; i < segU; i++) {
+      const u = (i / segU) * Math.PI * 2;
+      for (let j = 0; j < segV; j++) {
+        const v = (j / segV) * Math.PI * 2;
+        vertices.push({
+          x: (R + r * Math.cos(v)) * Math.cos(u),
+          y: (R + r * Math.cos(v)) * Math.sin(u),
+          z: r * Math.sin(v)
+        });
+      }
+    }
+
+    function render3D() {
+      ctx.clearRect(0, 0, w, h);
+      const spd = parseInt(speedSlider.value, 10) * 0.004;
+      angleX += spd;
+      angleY += spd * 1.3;
+
+      const projected = vertices.map(v => {
+        // Rotación X
+        let y1 = v.y * Math.cos(angleX) - v.z * Math.sin(angleX);
+        let z1 = v.y * Math.sin(angleX) + v.z * Math.cos(angleX);
+        // Rotación Y
+        let x2 = v.x * Math.cos(angleY) + z1 * Math.sin(angleY);
+        let z2 = -v.x * Math.sin(angleY) + z1 * Math.cos(angleY);
+        const scale = 420 / (420 + z2);
+        return { x: w / 2 + x2 * scale, y: h / 2 + y1 * scale, z: z2 };
+      });
+
+      for (let i = 0; i < projected.length; i++) {
+        const p = projected[i];
+        if (renderMode === 'points' || renderMode === 'dual') {
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, 2.1, 0, Math.PI * 2);
+          ctx.fillStyle = renderMode === 'dual' ? '#ffd166' : '#00f5d4';
+          ctx.fill();
+        }
+        if (renderMode === 'wire' || renderMode === 'dual') {
+          const next = projected[(i + 1) % projected.length];
+          ctx.beginPath();
+          ctx.moveTo(p.x, p.y);
+          ctx.lineTo(next.x, next.y);
+          ctx.strokeStyle = renderMode === 'dual' ? 'rgba(255, 42, 133, 0.48)' : 'rgba(157, 78, 221, 0.45)';
+          ctx.lineWidth = 0.9;
+          ctx.stroke();
+        }
+      }
+      requestAnimationFrame(render3D);
+    }
+    render3D();
+  </script>
+</body>
+</html>

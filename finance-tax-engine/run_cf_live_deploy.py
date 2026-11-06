@@ -1,117 +1,110 @@
 #!/usr/bin/env python3
-import getpass, json, pathlib, re, subprocess, sys
+"""
+Despliegue Oficial en Vivo hacia Cloudflare Edge Worker (s1979-4domains-portal)
+Acepta y prueba automáticamente tokens 'cfk_...', Bearer Tokens de 40 chars y Global API Keys de 37 chars hex.
+"""
 
-email = "Guadalupelopezjose96@gmail.com"
-try:
-    raw = getpass.getpass("Pega aqui tu clave de Cloudflare (terminada en ...aba6) y pulsa Enter: ").strip()
-except Exception:
-    raw = sys.stdin.readline().strip()
+import getpass
+import json
+import os
+import pathlib
+import re
+import subprocess
+import sys
 
-secret = re.sub(r"[^A-Za-z0-9_-]", "", raw)
-print(f"[DIAGNOSTICO] Longitud: {len(secret)} chars | Inicio: '{secret[:4]}...' | Fin: '...{secret[-4:]}'")
+HOME = pathlib.Path("/data/data/com.termux/files/home")
+ECOSYSTEM_DIR = HOME / "proyectos" / "standard1979_web_ecosystem"
+EMAIL = "Guadalupelopezjose96@gmail.com"
 
-if not secret or "PIOCfez" in secret:
-    print("[ERROR] Clave vacia o es la antigua revocada (...f36f).")
-    sys.exit(1)
+DOMAINS = {
+    "standard1979.com": "standard1979",
+    "auraintelcore.com": "auraintelcore",
+    "auratetrax.com": "auratetrax",
+    "auraintelstudios3d.com": "auraintelstudios3d",
+    "fourphonix.com": "fourphonix",
+    "prophonix.com": "prophonix",
+}
 
-stripped = secret[4:] if secret.startswith("cfk_") else secret
-candidates = [
-    ("Bearer (sin cfk_)", ["-H", f"Authorization: Bearer {stripped}"]),
-    ("Bearer (con cfk_)", ["-H", f"Authorization: Bearer {secret}"]),
-    ("X-Auth-Key (sin cfk_)", ["-H", f"X-Auth-Email: {email}", "-H", f"X-Auth-Key: {stripped}"]),
-    ("X-Auth-Key (con cfk_)", ["-H", f"X-Auth-Email: {email}", "-H", f"X-Auth-Key: {secret}"]),
-]
-if len(stripped) > 37 and re.fullmatch(r"[0-9a-fA-F]{37}", stripped[-37:]):
-    candidates.append(("X-Auth-Key (hex37 tail)", ["-H", f"X-Auth-Email: {email}", "-H", f"X-Auth-Key: {stripped[-37:].lower()}"]))
+def test_auth_variants(secret: str):
+    variants = []
+    # 1. Si empieza con cfk_, probar sin prefijo cfk_ como Bearer y como X-Auth-Key
+    if secret.startswith("cfk_"):
+        stripped = secret[4:]
+        variants.append(("Bearer (sin cfk_)", ["-H", f"Authorization: Bearer {stripped}"]))
+        variants.append(("Bearer (con cfk_)", ["-H", f"Authorization: Bearer {secret}"]))
+        variants.append(("X-Auth-Key (sin cfk_)", ["-H", f"X-Auth-Email: {EMAIL}", "-H", f"X-Auth-Key: {stripped}"]))
+        # También probar primeros 40 chars después de cfk_ (si los últimos 8 son checksum hex)
+        if len(stripped) == 48:
+            variants.append(("Bearer (40 chars core)", ["-H", f"Authorization: Bearer {stripped[:40]}"]))
+    else:
+        if re.fullmatch(r"[0-9a-fA-F]{37}", secret):
+            variants.append(("Global API Key (37 hex)", ["-H", f"X-Auth-Email: {EMAIL}", "-H", f"X-Auth-Key: {secret.lower()}"]))
+        variants.append(("Bearer Token directo", ["-H", f"Authorization: Bearer {secret}"]))
+        variants.append(("X-Auth-Key directo", ["-H", f"X-Auth-Email: {EMAIL}", "-H", f"X-Auth-Key: {secret}"]))
 
-auth_hdrs = None
-zones_res = None
-
-for label, hdrs in candidates:
-    out = subprocess.check_output(
-        ["curl", "-s", "-A", "Mozilla/5.0"] + hdrs + ["https://api.cloudflare.com/client/v4/zones?per_page=50"]
-    ).decode()
-    try:
-        data = json.loads(out)
-        if data.get("success"):
-            auth_hdrs = hdrs
-            zones_res = data
-            print(f"[OK] Autenticacion exitosa usando modo: {label}")
-            break
-        else:
-            print(f"[INFO] Modo {label} -> {data.get('errors')}")
-    except Exception:
-        pass
-
-if not auth_hdrs:
-    # Probar si es un Account API Token verificando /accounts
-    for label, hdrs in candidates[:2]:
-        out = subprocess.check_output(
-            ["curl", "-s", "-A", "Mozilla/5.0"] + hdrs + ["https://api.cloudflare.com/client/v4/accounts?per_page=10"]
-        ).decode()
+    for label, hdrs in variants:
         try:
-            data = json.loads(out)
-            if data.get("success") and data.get("result"):
-                auth_hdrs = hdrs
-                zones_res = {"result": [{"name": "auratetrax.com", "id": "", "account": {"id": data["result"][0]["id"]}}]}
-                print(f"[OK] Autenticacion de Cuenta exitosa usando modo: {label}")
-                break
+            raw_out = subprocess.check_output(
+                ["curl", "-s", "-A", "Mozilla/5.0"] + hdrs + ["https://api.cloudflare.com/client/v4/zones?per_page=50"],
+                text=True
+            )
+            res = json.loads(raw_out)
+            if res.get("success") and res.get("result") is not None:
+                print(f" [OK] ¡Autenticación exitosa usando formato: {label}!")
+                return hdrs, res.get("result", [])
+            else:
+                errs = res.get("errors", [])
+                print(f"   [-] Variante '{label}' rechazada: {errs}")
+        except Exception as e:
+            print(f"   [!] Error probando {label}: {e}")
+    return None, None
+
+def main():
+    print("==========================================================================")
+    print(" DESPLIEGUE MULTI-FORMATO CLOUDFLARE WORKER: s1979-4domains-portal (v1.4) ")
+    print("==========================================================================")
+    try:
+        raw = getpass.getpass(" -> Pega tu clave/token de Cloudflare y pulsa Enter: ").strip()
+    except Exception:
+        raw = sys.stdin.readline().strip()
+
+    secret = re.sub(r"[^A-Za-z0-9_-]", "", raw)
+    print(f" [DIAGNÓSTICO] Longitud: {len(secret)} chars | Inicio: '{secret[:4]}...' | Fin: '...{secret[-4:]}'")
+
+    if not secret:
+        print(" [ERROR] No se ingresó ninguna clave.")
+        sys.exit(1)
+
+    auth_hdrs, zones = test_auth_variants(secret)
+    if not auth_hdrs or not zones:
+        print("\n [!] Ninguna variante autenticó en Cloudflare.")
+        print("     En https://dash.cloudflare.com/profile/api-tokens baja hasta la sección 'API Keys'")
+        print("     -> En 'Global API Key' toca 'View' (son exactamente 37 letras a-f y números 0-9).")
+        sys.exit(1)
+
+    acct_id = zones[0]["account"]["id"]
+    print(f" [OK] Account ID: {acct_id} | Zonas encontradas: {len(zones)}")
+
+    pages_dict = {}
+    for dom, folder in DOMAINS.items():
+        html_path = ECOSYSTEM_DIR / folder / "index.html"
+        html_str = html_path.read_text(encoding="utf-8")
+        pages_dict[dom] = html_str
+        pages_dict[f"www.{dom}"] = html_str
+        print(f" [+] HTML v1.4 listo para {dom:<24} ({len(html_str):,} bytes)")
+
+    svgs_dict = {}
+    old_script = HOME / "standard1979-ecosystem" / "finance-tax-engine" / "deploy_s1979_4domains_worker_live.py"
+    if old_script.exists():
+        try:
+            ns = {"__file__": str(old_script.resolve())}
+            exec(old_script.read_text(encoding="utf-8").split("hdrs =")[0], ns)
+            svgs_dict = ns.get("SVGS", {})
         except Exception:
             pass
 
-if not auth_hdrs:
-    print("[ERROR] Ningun modo de autenticacion fue aceptado por Cloudflare para esta clave.")
-    sys.exit(1)
-
-zones = zones_res.get("result", [])
-acct_id = zones[0]["account"]["id"]
-print(f"[OK] Account ID: {acct_id} | Zonas detectadas: {len(zones)}")
-
-worker_domains = {"auratetrax.com", "auraintelstudios3d.com", "fourphonix.com", "prophonix.com"}
-for z in zones:
-    zname = z.get("name")
-    zid = z.get("id")
-    if zname in worker_domains and zid:
-        subprocess.run(["curl", "-s", "-X", "PATCH"] + auth_hdrs + [
-            "-H", "Content-Type: application/json", "-d", '{"enabled":true}',
-            f"https://api.cloudflare.com/client/v4/zones/{zid}/ssl/universal/settings"
-        ], stdout=subprocess.DEVNULL)
-        subprocess.run(["curl", "-s", "-X", "PATCH"] + auth_hdrs + [
-            "-H", "Content-Type: application/json", "-d", '{"value":"flexible"}',
-            f"https://api.cloudflare.com/client/v4/zones/{zid}/settings/ssl"
-        ], stdout=subprocess.DEVNULL)
-        routes_raw = subprocess.check_output(
-            ["curl", "-s"] + auth_hdrs + [f"https://api.cloudflare.com/client/v4/zones/{zid}/workers/routes"]
-        ).decode()
-        existing = [r.get("pattern") for r in json.loads(routes_raw).get("result", [])]
-        for pat in (f"{zname}/*", f"*.{zname}/*"):
-            if pat not in existing:
-                subprocess.run(["curl", "-s", "-X", "POST"] + auth_hdrs + [
-                    "-H", "Content-Type: application/json",
-                    "-d", json.dumps({"pattern": pat, "script": "s1979-4domains-portal"}),
-                    f"https://api.cloudflare.com/client/v4/zones/{zid}/workers/routes"
-                ], stdout=subprocess.DEVNULL)
-        print(f"[OK] Zona {zname}: Universal SSL + Rutas hacia s1979-4domains-portal verificadas.")
-
-script_path = pathlib.Path("finance-tax-engine/deploy_s1979_4domains_worker_live.py")
-code = script_path.read_text(encoding="utf-8")
-ns = {"__file__": str(script_path.resolve())}
-exec(code.split("hdrs =")[0], ns)
-
-legal_footer = (
-    '<div style="max-width:1180px;margin:24px auto 0;padding:14px 24px;border-top:1px solid #1e293b;'
-    'font-size:11px;color:#64748b;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px">'
-    '<span>&copy; 2026 Standard 1979 Holdings, LLC. All IP &amp; CMI protected under Lanham Act (15 U.S.C. &sect; 1051) &amp; DMCA &sect; 1202 (17 U.S.C. &sect; 1202).</span>'
-    '<span>Accounting: FASB ASC 606 | Intercompany Transfer Pricing: IRC &sect; 482 | WORM Audit: RFC 3161 | SLSA Level 3</span>'
-    '</div></body>'
-)
-for k in ns["pages"]:
-    if "DMCA &sect; 1202" not in ns["pages"][k]:
-        ns["pages"][k] = ns["pages"][k].replace("</body>", legal_footer)
-
-worker_js = f"""
-const PAGES = {json.dumps(ns['pages'])};
-const SVGS = {json.dumps(ns['SVGS'])};
+    worker_js = f"""const PAGES = {json.dumps(pages_dict)};
+const SVGS = {json.dumps(svgs_dict)};
 export default {{
   async fetch(request) {{
     const url = new URL(request.url);
@@ -131,16 +124,16 @@ export default {{
       'X-IP-Holder': 'Standard 1979 Holdings, LLC',
       'X-CMI-Protection': '17-USC-1202; Lanham-Act-15-USC-1051',
       'X-Tax-Governance': isPhonix ? 'ASC-606; IRC-482-Royalty-10pct-AGR; Phonix-Communications-Operating-LLC' : 'ASC-606; IRC-482-Royalty-15pct-AGR; Aura-Technologies-Operating-LLC',
-      'X-Regulatory-Compliance': isPhonix ? 'FCC-STIR-SHAKEN-Level-A; Karis-Law; RAY-BAUM; CPNI-AES256; TCPA; FL-FTSA-501.059' : 'SLSA-L3; C2PA-v2.1; RFC-3161-WORM; POL-SEC-OSS-001'
+      'X-Regulatory-Compliance': isPhonix ? 'FCC-STIR-SHAKEN-Level-A; Karis-Law; RAY-BAUM; CPNI-AES256; TCPA; FL-FTSA-501.059' : 'SLSA-Level-3; C2PA-v2.1-Ed25519; RFC-3161-WORM; Fla-Admin-Code-12A-1.032'
     }};
     if (url.pathname === '/favicon.svg' || url.pathname === '/favicon.ico' || url.pathname === '/assets/brand/bimi-logo.svg') {{
-      const svg = SVGS[host] || SVGS['prophonix.com'];
+      const svg = SVGS[host] || SVGS['prophonix.com'] || '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="12" fill="#090d16"/><text x="50%" y="56%" text-anchor="middle" fill="#f59e0b" font-family="monospace" font-weight="bold" font-size="24">S79</text></svg>';
       return new Response(svg, {{
         status: 200,
         headers: {{
-          ...secHeaders,
           'Content-Type': 'image/svg+xml; charset=utf-8',
           'Cache-Control': 'public, max-age=86400',
+          'X-Content-Type-Options': 'nosniff',
           'Cross-Origin-Resource-Policy': 'cross-origin'
         }}
       }});
@@ -152,7 +145,7 @@ export default {{
         headers: {{
           ...secHeaders,
           'Content-Type': 'text/html; charset=utf-8',
-          'Cache-Control': 'no-store'
+          'Cache-Control': 'no-store, no-cache, must-revalidate, max-age=0'
         }}
       }});
     }}
@@ -161,20 +154,42 @@ export default {{
 }};
 """
 
-tmp_js = pathlib.Path("/data/data/com.termux/files/usr/tmp/worker.js")
-tmp_meta = pathlib.Path("/data/data/com.termux/files/usr/tmp/meta.json")
-tmp_js.write_text(worker_js, encoding="utf-8")
-tmp_meta.write_text(json.dumps({"main_module": "worker.js", "compatibility_date": "2026-01-01"}), encoding="utf-8")
+    tmp_js = pathlib.Path("/data/data/com.termux/files/usr/tmp/worker.js")
+    tmp_meta = pathlib.Path("/data/data/com.termux/files/usr/tmp/meta.json")
+    tmp_js.write_text(worker_js, encoding="utf-8")
+    tmp_meta.write_text(json.dumps({"main_module": "worker.js", "compatibility_date": "2026-01-01"}), encoding="utf-8")
 
-up_out = subprocess.check_output([
-    "curl", "-s", "-X", "PUT"
-] + auth_hdrs + [
-    "-F", f"metadata=@{tmp_meta};type=application/json",
-    "-F", f"worker.js=@{tmp_js};type=application/javascript+module",
-    f"https://api.cloudflare.com/client/v4/accounts/{acct_id}/workers/scripts/s1979-4domains-portal"
-]).decode()
+    up_out = subprocess.check_output(
+        ["curl", "-s", "-X", "PUT", "-A", "Mozilla/5.0"] + auth_hdrs + [
+            "-F", f"metadata=@{tmp_meta};type=application/json",
+            "-F", f"worker.js=@{tmp_js};type=application/javascript+module",
+            f"https://api.cloudflare.com/client/v4/accounts/{acct_id}/workers/scripts/s1979-4domains-portal"
+        ],
+        text=True
+    )
+    up_res = json.loads(up_out)
+    print(" [OK] Worker s1979-4domains-portal desplegado con éxito:", up_res.get("success"))
+    if not up_res.get("success"):
+        print(" [ERROR DETAIL]:", up_res.get("errors"))
+        sys.exit(1)
 
-up_res = json.loads(up_out)
-print("[OK] Worker s1979-4domains-portal 100% blindado y desplegado:", up_res.get("success"))
-if not up_res.get("success"):
-    print("[ERROR DETAIL]:", up_res.get("errors"))
+    for z in zones:
+        zname = z["name"]
+        zid = z["id"]
+        if zname in DOMAINS:
+            subprocess.run(
+                ["curl", "-s", "-X", "POST", "-A", "Mozilla/5.0"] + auth_hdrs + [
+                    "-H", "Content-Type: application/json",
+                    "-d", '{"purge_everything":true}',
+                    f"https://api.cloudflare.com/client/v4/zones/{zid}/purge_cache"
+                ],
+                stdout=subprocess.DEVNULL
+            )
+            print(f" [OK] Caché global purgada en: https://{zname}")
+
+    print("==========================================================================")
+    print(" ¡LOS 6 PORTALES CORPORATIVOS v1.4 ESTÁN 100% EN VIVO EN CLOUDFLARE EDGE! ")
+    print("==========================================================================")
+
+if __name__ == "__main__":
+    main()

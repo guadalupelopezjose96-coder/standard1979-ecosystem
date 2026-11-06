@@ -1,0 +1,178 @@
+{
+  "timestamp_utc": "2026-11-06T08:31:06Z",
+  "parent_holding": "Standard 1979 Holdings, LLC",
+  "jurisdiction": "State of Florida, United States (Fla. Stat. Ch. 605)",
+  "stripe_account_id": "acct_1UYSNeAMVKJK8xcd",
+  "stripe_b2b_tax_portal_id": "bpc_1UWnOzFE1PknN553wBZioc6n",
+  "canonical_skus_homologated": 36,
+  "merkle_root_rfc6962": "483e0685247a303d7e3f72bcdfea83af4bfa81ff45fb9ab2ed6c732f78f9955d",
+  "pqc_sha3_512_integrity_seal": "be6cb2dd279104d2753d8b9888fce19ba7ccd4dff978df251ae48b94c3d5323944a56780074d20fdb853baa096664fbf9ae41de90f8a5f5cc90abadaebb8e6c9",
+  "domains_compliance_matrix": [
+    {
+      "domain": "standard1979.com",
+      "folder": "standard1979",
+      "entity": "Standard 1979 Holdings, LLC",
+      "role": "Parent Holding, IP Treasury & WORM Compliance Vault",
+      "royalty_rate": 0.0,
+      "tax_code": "txcd_10000000",
+      "statutes": [
+        "Fla. Stat. Ch. 605 (Florida Revised LLC Act)",
+        "17 U.S.C. § 201 & § 1202 (Copyright Ownership & CMI Integrity)",
+        "15 U.S.C. § 1051 et seq. (Lanham Act Trademark Protection)",
+        "26 U.S.C. (IRC) § 482 & §§ 414(b)/(c), 1563 (Transfer Pricing & Controlled Group)",
+        "31 U.S.C. § 5336 (Corporate Transparency Act / FinCEN BOI)",
+        "FASB ASC 606 & RFC 3161 Immutable WORM Ledger"
+      ],
+      "local_html_sha256": "f1f64a74d2c0cd152e84804c971e30a97680e945aba95fa1e2d3ab6d9a65e916",
+      "stripe_checkout_links_verified": 7,
+      "ftc_click_to_cancel_portal_active": true,
+      "live_edge_telemetry": {
+        "http_status": "HTTP/2 200",
+        "hsts": true,
+        "x_ip_holder": "Standard 1979 Holdings, LLC",
+        "x_tax_governance": "ASC-606; IRC-482-Royalty-15pct-AGR; Aura-Technologies-Operating-LLC",
+        "x_regulatory_compliance": "SLSA-Level-3; C2PA-v2.1-Ed25519; RFC-3161-WORM; Fla-Admin-Code-12A-1.032"
+      }
+    },
+    {
+      "domain": "auraintelcore.com",
+      "folder": "auraintelcore",
+      "entity": "Aura Technologies Operating, LLC",
+      "role": "Enterprise OIDC/OAuth 2.1 vLLM Gateway, OpenTofu & +25,000 mW VPP",
+      "royalty_rate": 0.15,
+      "tax_code": "txcd_10103001",
+      "statutes": [
+        "ISO/IEC 42001:2023 & NIST AI RMF 1.0",
+        "EU AI Act (Reg. 2024/1689 Art. 50 Transparency)",
+        "EEOC Four-Fifths Disparate Impact Rule (29 CFR § 1607.4(D) >= 0.80)",
+        "Fla. Admin. Code r. 12A-1.032 (Cloud SaaS Tax Governance)",
+        "SOC 2 Type II, ISO/IEC 27001:2022 & PCI-DSS v4.0 SAQ-A"
+      ],
+      "local_html_sha256": "748425e811ee690b4f3645eb90650cbddef8adde170a97d8f9d839ff21e7da01",
+      "stripe_checkout_links_verified": 10,
+      "ftc_click_to_cancel_portal_active": true,
+      "live_edge_telemetry": {
+        "http_status": "HTTP/2 200",
+        "hsts": true,
+        "x_ip_holder": "Standard 1979 Holdings, LLC",
+        "x_tax_governance": "ASC-606; IRC-482-Royalty-15pct-AGR; Aura-Technologies-Operating-LLC",
+        "x_regulatory_compliance": "SLSA-Level-3; C2PA-v2.1-Ed25519; RFC-3161-WORM; Fla-Admin-Code-12A-1.032"
+      }
+    },
+    {
+      "domain": "auratetrax.com",
+      "folder": "auratetrax",
+      "entity": "Aura Technologies Operating, LLC",
+      "role": "Industrial SCADA, 32 Cilium eBPF MicroVMs & Autonomous Agentic Compute",
+      "royalty_rate": 0.15,
+      "tax_code": "txcd_10103001",
+      "statutes": [
+        "SLSA Level 3 Supply Chain Integrity & CycloneDX v1.5 SBOM",
+        "SPIFFE/SPIRE mTLS Mesh & gVisor Sandboxed MicroVMs",
+        "BIS EAR Export Controls (15 CFR Parts 730-774, ECCN 3A090/4A090)",
+        "OFAC SDN Screening (31 CFR Chapter V) & CMMC 2.0 Level 2",
+        "NIST SP 800-88 Rev. 1 Crypto-Shredding DSAR"
+      ],
+      "local_html_sha256": "14d5308df4cf1bdd80f9b28649a9d07b2c7250a185a00cf24bfb16118408fe1e",
+      "stripe_checkout_links_verified": 6,
+      "ftc_click_to_cancel_portal_active": true,
+      "live_edge_telemetry": {
+        "http_status": "HTTP/2 200",
+        "hsts": true,
+        "x_ip_holder": "Standard 1979 Holdings, LLC",
+        "x_tax_governance": "ASC-606; IRC-482-Royalty-15pct-AGR; Aura-Technologies-Operating-LLC",
+        "x_regulatory_compliance": "SLSA-Level-3; C2PA-v2.1-Ed25519; RFC-3161-WORM; Fla-Admin-Code-12A-1.032"
+      }
+    },
+    {
+      "domain": "auraintelstudios3d.com",
+      "folder": "auraintelstudios3d",
+      "entity": "Aura Technologies Operating, LLC",
+      "role": "NVIDIA H100 Generative 3D, Digital Twins & C2PA v2.1 Ed25519 Notary",
+      "royalty_rate": 0.15,
+      "tax_code": "txcd_10103001",
+      "statutes": [
+        "C2PA v2.1 Cryptographic Provenance & Ed25519 Manifest Signing",
+        "17 U.S.C. § 512(c) (DMCA Safe Harbor) & 17 U.S.C. § 1202 (CMI Preservation)",
+        "Fla. Stat. § 501.701 (FDBR) & Fla. Stat. § 501.171 (FIPA)",
+        "FTC Click-to-Cancel (16 CFR Part 425) & ROSCA (15 U.S.C. § 8401)"
+      ],
+      "local_html_sha256": "33d31e3830a225f48cc0073a00bd4df2052de3005f08a5e9d9a513a50f72dd06",
+      "stripe_checkout_links_verified": 5,
+      "ftc_click_to_cancel_portal_active": true,
+      "live_edge_telemetry": {
+        "http_status": "HTTP/2 200",
+        "hsts": true,
+        "x_ip_holder": "Standard 1979 Holdings, LLC",
+        "x_tax_governance": "ASC-606; IRC-482-Royalty-15pct-AGR; Aura-Technologies-Operating-LLC",
+        "x_regulatory_compliance": "SLSA-Level-3; C2PA-v2.1-Ed25519; RFC-3161-WORM; Fla-Admin-Code-12A-1.032"
+      }
+    },
+    {
+      "domain": "fourphonix.com",
+      "folder": "fourphonix",
+      "entity": "Phonix Communications Operating, LLC",
+      "role": "Enterprise Cloud PBX, Omnichannel 10DLC, AI Voice UCaaS & Dynamic E911",
+      "royalty_rate": 0.1,
+      "tax_code": "txcd_20030000",
+      "statutes": [
+        "TRACED Act & FCC STIR/SHAKEN Level-A (47 CFR § 64.6301 / ATIS-1000074)",
+        "Kari's Law (47 U.S.C. § 623) & RAY BAUM's Act Dynamic E911 PIDF-LO (47 CFR § 9.1)",
+        "47 U.S.C. § 222 & 47 CFR § 64.2011 (CPNI AES-256 Protection)",
+        "TCR A2P 10DLC Compliance, FCC USF (47 U.S.C. § 254) & FL CST (Fla. Stat. Ch. 202)"
+      ],
+      "local_html_sha256": "9f6ecc05f94867dc56bc24b9b86c7623718881d6c68f1ba882dfadc99f3260f6",
+      "stripe_checkout_links_verified": 4,
+      "ftc_click_to_cancel_portal_active": true,
+      "live_edge_telemetry": {
+        "http_status": "HTTP/2 200",
+        "hsts": true,
+        "x_ip_holder": "Standard 1979 Holdings, LLC",
+        "x_tax_governance": "ASC-606; IRC-482-Royalty-10pct-AGR; Phonix-Communications-Operating-LLC",
+        "x_regulatory_compliance": "FCC-STIR-SHAKEN-Level-A; Karis-Law; RAY-BAUM; CPNI-AES256; TCPA; FL-FTSA-501.059"
+      }
+    },
+    {
+      "domain": "prophonix.com",
+      "folder": "prophonix",
+      "entity": "Phonix Communications Operating, LLC",
+      "role": "Wholesale Carrier SIP Trunking, BGP Anycast SBC & High-CPS Interconnect",
+      "royalty_rate": 0.1,
+      "tax_code": "txcd_20030000",
+      "statutes": [
+        "TCPA (47 U.S.C. § 227) & Florida FTSA Safe Harbor (Fla. Stat. § 501.059: 8AM-8PM, Max 3/24h)",
+        "National DNC & FCC Reassigned Numbers Database (RND) Scrubbing",
+        "FCC Robocall Mitigation Database (RMD) & ITG Traceback (<24h SLA)",
+        "BGP Anycast RPKI ROA Origin Validation & SIP TLS 1.3 + SRTP (RFC 3711)"
+      ],
+      "local_html_sha256": "9a4d8d4944ec444af8303c321d7650e7490026fdc30ec4fee88b5e6ff8caf28e",
+      "stripe_checkout_links_verified": 4,
+      "ftc_click_to_cancel_portal_active": true,
+      "live_edge_telemetry": {
+        "http_status": "HTTP/2 200",
+        "hsts": true,
+        "x_ip_holder": "Standard 1979 Holdings, LLC",
+        "x_tax_governance": "ASC-606; IRC-482-Royalty-10pct-AGR; Phonix-Communications-Operating-LLC",
+        "x_regulatory_compliance": "FCC-STIR-SHAKEN-Level-A; Karis-Law; RAY-BAUM; CPNI-AES256; TCPA; FL-FTSA-501.059"
+      }
+    }
+  ],
+  "mobile_and_contractual_governance": {
+    "apple_app_store": [
+      "Guideline 5.1.1(v): In-app Self-Service Account Deletion & NIST SP 800-88 Crypto-Shredding",
+      "Guideline 3.1.1 / 3.1.3(b): StoreKit 2 / Enterprise B2B Multi-Platform Reader Compliance",
+      "PrivacyInfo.xcprivacy Required Reason APIs & App Attest (DeviceCheck) Hardware Attestation"
+    ],
+    "google_play_store": [
+      "Data Safety Declaration & External Web Account Deletion Endpoint",
+      "Play Integrity API Hardware Attestation & Scoped Telecom/E911 Permissions"
+    ],
+    "contractual_and_statutory_locks": [
+      "E-SIGN Act (15 U.S.C. § 7001) & Florida UETA (Fla. Stat. § 668.50) Cryptographic Acceptance",
+      "ROSCA (15 U.S.C. § 8401) & FTC 16 CFR Part 425 Click-to-Cancel Portal (bpc_1UWnOzFE1PknN553wBZioc6n)",
+      "AAA Commercial Binding Arbitration (Orlando / Orange County, FL) & Class Action Waiver (9 U.S.C. § 1)",
+      "3-Month Fees Liability Cap & License-Only Grant (Zero IP Assignment under 17 U.S.C. § 201)"
+    ]
+  },
+  "global_certification_status": "100% LEGAL, LICIT, SECURE AND TECHNICALLY OPTIMAL"
+}

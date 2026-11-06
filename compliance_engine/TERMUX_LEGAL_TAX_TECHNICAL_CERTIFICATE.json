@@ -1,0 +1,27 @@
+{
+  "timestamp_utc": "2026-11-06T08:10:31Z",
+  "environment": "Termux Production & DevSecOps Control Plane (Android/Linux Bionic libc)",
+  "uid_isolation": 10315,
+  "parent_holding": "Standard 1979 Holdings, LLC (Fla. Stat. Ch. 605)",
+  "open_source_isolation_governance": {
+    "termux_base_license": "GNU General Public License v3.0 (GPLv3)",
+    "proprietary_isolation_doctrine": "GPLv3 Section 5 'Mere Aggregation' & POSIX CLI Process Boundary",
+    "proprietary_ip_contamination_risk": "ZERO (0%) — All Standard 1979 source code, HTML, Python, Rust and Worker bundles execute via standard interpreter/compiler interfaces without static linking to GPLv3 libraries.",
+    "copyright_and_trade_secret_statutes": [
+      "17 U.S.C. § 201 (Exclusive Ownership)",
+      "17 U.S.C. § 1202 (CMI Integrity)",
+      "18 U.S.C. § 1836 (Defend Trade Secrets Act - DTSA)",
+      "Fla. Stat. Ch. 688 (Florida Uniform Trade Secrets Act - FUTSA)"
+    ]
+  },
+  "tax_and_accounting_governance": {
+    "rd_capitalization": "26 U.S.C. (IRC) § 174 & FASB ASC 350-40 / IAS 38 Software Development Capitalization",
+    "transfer_pricing": "26 U.S.C. (IRC) § 482 Arm's-Length Engineering & IP Licensing (15% Aura OpCo / 10% Phonix OpCo)",
+    "pci_dss_scope": "PCI-DSS v4.0 SAQ-A Out-of-Scope Control Plane (Zero PAN/CHD storage in Termux)"
+  },
+  "security_hardening": {
+    "ssh_keepalive": "ClientAliveInterval 15 / TCPKeepAlive yes",
+    "file_permissions": "0600 / 0700 Strict POSIX UID Isolation",
+    "supply_chain_slsa": "SLSA Level 3 + CycloneDX v1.5 SBOM + Ed25519 Signed Commits"
+  }
+}

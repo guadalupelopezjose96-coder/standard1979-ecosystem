@@ -5,6 +5,17 @@ email = "Guadalupelopezjose96@gmail.com"
 key = "cfk_PIOCfez2IrQxlmHuP7igv8fHiUSFUAGDc9QMVejkbd0bf36f"
 PORTAL = "bpc_1UWnOzFE1PknNS53wBZioc6n"
 
+
+import pathlib as _pathlib
+_ASSETS_DIR = _pathlib.Path(__file__).resolve().parent.parent / "brand-governance" / "assets"
+_DOM_MAP = {
+    "auratetrax.com": "AuraTetrax.com",
+    "auraintelstudios3d.com": "AuraIntelStudios3D.com",
+    "fourphonix.com": "fourphonix.com",
+    "prophonix.com": "prophonix.com",
+}
+SVGS = {d: (_ASSETS_DIR / folder / "bimi-logo.svg").read_text(encoding="utf-8") for d, folder in _DOM_MAP.items()}
+
 THEMES = {
   "auratetrax.com": {
     "bg": "#080512", "panel": "#120b24", "border": "#3b1d6e", "accent": "#a855f7", "accent2": "#ec4899",
@@ -89,7 +100,7 @@ def render_site(dom, t):
         opts += f'<option value="{i}" data-p="{pr}" data-s="{sku}">{name}   USD {pr:,.2f} ({bill})</option>'
 
     return f'''<!DOCTYPE html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>{t["hero"]}</title>
+<title>{t["hero"]}</title><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="alternate icon" href="/favicon.ico">
 <style>
 body{{margin:0;background:{t["bg"]};color:#f1f5f9;font-family:{t["font"]}}}
 .bar{{padding:12px 24px;background:#00000066;border-bottom:1px solid {t["border"]};display:flex;justify-content:space-between;font-size:12px;color:{t["accent"]};font-family:monospace}}
@@ -109,7 +120,7 @@ select,input[type=range]{{width:100%;padding:10px;background:{t["panel"]};color:
 .mgrid{{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-top:16px}}
 .mcard{{background:{t["bg"]};border:1px solid {t["border"]};padding:14px;border-radius:10px}}
 </style></head><body>
-<div class="bar"><span><b>{dom.upper()}</b> // {t["opco"]}</span><span>STRIPE TAX & B2B PORTAL: {PORTAL}</span></div>
+<div class="bar"><span style="display:flex;align-items:center;gap:10px"><img src="/favicon.svg" alt="logo" style="width:22px;height:22px;border-radius:4px"><b>{dom.upper()}</b> // {t["opco"]}</span><span>STRIPE TAX & B2B PORTAL: {PORTAL}</span></div>
 <div class="wrap">
   <div class="hero">
     <div class="tag">{t["tag"]}</div>
@@ -164,6 +175,7 @@ acct_id = zones[0]["account"]["id"]
 
 worker_js = f"""
 const PAGES = {json.dumps(pages)};
+const SVGS = {json.dumps(SVGS)};
 export default {{
   async fetch(request) {{
     const url = new URL(request.url);
@@ -172,6 +184,18 @@ export default {{
     }}
     const preview = url.searchParams.get('preview');
     const host = (preview && PAGES[preview]) ? preview : url.hostname.toLowerCase().replace(/^www\\./, '');
+    if (url.pathname === '/favicon.svg' || url.pathname === '/favicon.ico' || url.pathname === '/assets/brand/bimi-logo.svg') {{
+      const svg = SVGS[host] || SVGS['prophonix.com'];
+      return new Response(svg, {{
+        status: 200,
+        headers: {{
+          'Content-Type': 'image/svg+xml; charset=utf-8',
+          'Cache-Control': 'public, max-age=86400',
+          'X-Content-Type-Options': 'nosniff',
+          'Cross-Origin-Resource-Policy': 'cross-origin'
+        }}
+      }});
+    }}
     const html = PAGES[host];
     if (html) {{
       return new Response(html, {{

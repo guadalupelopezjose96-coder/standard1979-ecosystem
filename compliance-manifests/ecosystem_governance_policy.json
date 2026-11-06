@@ -1,0 +1,50 @@
+{
+  "organization": "Standard 1979 Holdings, LLC",
+  "policy_version": "2026.11.1",
+  "entities": {
+    "holding": {
+      "legal_name": "Standard 1979 Holdings, LLC",
+      "domains": ["standard1979.com"],
+      "role": "IP_TREASURY_AND_PARENT_HOLDING",
+      "ip_ownership_percentage": 100
+    },
+    "ai_subsidiary": {
+      "legal_name": "Aura Technologies Operating, LLC",
+      "domains": ["AuraIntelCore.com", "AuraTetrax.com", "AuraIntelStudios3D.com"],
+      "irc_482_royalty_agr_percent": 15.0,
+      "compliance_frameworks": [
+        "ISO/IEC 42001:2023",
+        "NIST AI RMF 1.0",
+        "EU AI Act Art. 50",
+        "C2PA v2.1",
+        "EEOC Four-Fifths (>=0.80)"
+      ]
+    },
+    "telecom_subsidiary": {
+      "legal_name": "Phonix Communications Operating, LLC",
+      "domains": ["fourphonix.com", "prophonix.com"],
+      "google_workspace_primary": "fourphonix.com",
+      "irc_482_royalty_agr_percent": 10.0,
+      "compliance_frameworks": [
+        "FCC STIR/SHAKEN ATIS-1000074",
+        "Kari's Law & RAY BAUM's Act (E911 PIDF-LO)",
+        "Florida FTSA (Fla. Stat. 501.059)",
+        "CPNI (47 CFR 64.2011)",
+        "FCC USF & FL CST"
+      ]
+    }
+  },
+  "global_security_and_tax_controls": {
+    "security": ["SOC 2 Type II", "ISO/IEC 27001:2022", "PCI-DSS v4.0 SAQ-A", "CMMC 2.0 Level 2"],
+    "privacy_dsar": "NIST SP 800-88 Rev. 1 Crypto-Shredding",
+    "accounting": ["FASB ASC 606", "IRS IRC Section 482"],
+    "export_controls": ["OFAC SDN", "BIS EAR ECCN 3A090/4A090"],
+    "cryptography": {
+      "git_signing": "Ed25519",
+      "merkle_standard": "RFC 6962",
+      "pqc_envelope": "SHA3-512 / NIST FIPS 203/204",
+      "shamir_quorum": "3-of-5 GF(256)",
+      "drp_vault": "AES-256-CBC PBKDF2 600000 iterations"
+    }
+  }
+}

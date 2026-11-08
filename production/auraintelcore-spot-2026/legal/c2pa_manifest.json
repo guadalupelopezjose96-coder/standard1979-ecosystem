@@ -1,0 +1,38 @@
+{
+  "vendor": "Standard 1979 Holdings, LLC",
+  "claim_generator": "Standard 1979 Provenance Engine v2.1",
+  "title": "AuraIntelCore Institutional Spot 2026",
+  "format": "video/mp4",
+  "assertions": [
+    {
+      "label": "c2pa.actions",
+      "data": {
+        "actions": [
+          {
+            "action": "c2pa.created",
+            "softwareAgent": "Blender 4.2 LTS / DaVinci Resolve Studio",
+            "parameters": {
+              "description": "3D cryptographic UI sequence and live console render"
+            }
+          },
+          {
+            "action": "c2pa.placed",
+            "softwareAgent": "Standard 1979 Media Gatekeeper",
+            "parameters": {
+              "compliance": "EU AI Act Art. 50 / ISO/IEC 42001:2023"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "label": "st1979.corporate.governance",
+      "data": {
+        "ip_owner": "Standard 1979 Holdings, LLC",
+        "operating_licensee": "Aura Technologies Operating, LLC",
+        "transfer_pricing_basis": "IRC § 482 (15% AGR)",
+        "synthetic_data_sanitization": "RFC 5737 / RFC 2606 Compliant"
+      }
+    }
+  ]
+}

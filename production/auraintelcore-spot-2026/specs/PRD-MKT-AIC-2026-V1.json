@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "document_id": "PRD-MKT-AIC-2026-V1",
+  "effective_date": "2026-11-08",
+  "legal_entity_operator": "Aura Technologies Operating, LLC",
+  "ip_treasury_holder": "Standard 1979 Holdings, LLC",
+  "asset": {
+    "domain": "AuraIntelCore.com",
+    "deliverable": "Institutional 60s Spot (OIDC/OAuth 2.1 SSO & LLM Gateway)",
+    "runtime_seconds": 60,
+    "frame_rate": 24.000,
+    "aspect_ratio": "16:9",
+    "color_space": "Rec.709 Gamma 2.4",
+    "audio_integrated_lufs": -14.0,
+    "audio_max_true_peak_dbtp": -1.0
+  },
+  "compliance_frameworks": [
+    "FTC 16 CFR Part 255",
+    "EU AI Act Art. 50 (Synthetic Content Provenance)",
+    "ISO/IEC 42001:2023",
+    "NIST AI RMF 1.0",
+    "WCAG 2.2 Level AA / ADA Title III",
+    "C2PA Specification v2.1",
+    "RFC 5737 / RFC 2606 Data Sanitization",
+    "IRC § 482 Arm's Length Licensing (15% AGR Royalty)"
+  ]
+}

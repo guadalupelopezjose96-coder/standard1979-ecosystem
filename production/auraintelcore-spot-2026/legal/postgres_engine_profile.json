@@ -1,0 +1,11 @@
+{
+  "ecosystem": "Standard 1979 Holdings, LLC",
+  "component": "Local Relational Persistence Engine",
+  "engine": "PostgreSQL",
+  "version": "18.6",
+  "architecture": "aarch64-unknown-linux-android",
+  "service_supervisor": "runit",
+  "rpo_target_minutes": 15,
+  "rto_target_minutes": 45,
+  "last_audit_timestamp": "2026-11-08T00:54:00Z"
+}

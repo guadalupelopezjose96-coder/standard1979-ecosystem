@@ -2,7 +2,7 @@
   "timestamp_utc": "2026-11-06T08:31:06Z",
   "parent_holding": "Standard 1979 Holdings, LLC",
   "jurisdiction": "State of Florida, United States (Fla. Stat. Ch. 605)",
-  "stripe_account_id": "acct_1UYSNeAMVKJK8xcd",
+  "stripe_account_id": "acct_1UYSNe••••8xcd",
   "stripe_b2b_tax_portal_id": "bpc_1UWnOzFE1PknN553wBZioc6n",
   "canonical_skus_homologated": 36,
   "merkle_root_rfc6962": "483e0685247a303d7e3f72bcdfea83af4bfa81ff45fb9ab2ed6c732f78f9955d",
@@ -38,7 +38,7 @@
       "domain": "auraintelcore.com",
       "folder": "auraintelcore",
       "entity": "Aura Technologies Operating, LLC",
-      "role": "Enterprise OIDC/OAuth 2.1 vLLM Gateway, OpenTofu & +25,000 mW VPP",
+      "role": "Enterprise OIDC/OAuth 2.1 vLLM Gateway, OpenTofu & +25,000 kW VPP",
       "royalty_rate": 0.15,
       "tax_code": "txcd_10103001",
       "statutes": [

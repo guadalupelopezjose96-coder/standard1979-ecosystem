@@ -107,7 +107,7 @@ def audit_interactions_and_webpages():
     print(" AUDITORIA INTEGRAL DEL 100% DE LAS INTERACCIONES (UETA/E-SIGN/mTLS) Y PAGINAS WEB (OWASP/PCI-v4/IRC482)")
     print("=" * 104)
     matrix = [
-        ("standard1979.com", "HOLDING AAUFSA IRC 56", "Tema Negro/Oro Institucional", "Consulta WORM chmod 400 + Licencias IRC 414/1563", "IRC 5000H(d) Safe Harbor | 0 Retail Checkout"),
+        ("standard1979.com", "HOLDING AAUFSA IRC 56", "Tema Negro/Oro Institucional", "Consulta WORM chmod 400 + Licencias IRC 414/1563", "IRC § 6001 & SEC Rule 17a-4(d) Safe Harbor | 0 Retail Checkout"),
         ("auraintelcore.com", "Aura Tech (15% Roy)", "Tema Esmeralda/Azul Grafana", "Simulador VPP 60Hz + Peak Shaving + Checkout B2B", "FERC 2222 / NERC CIP | OIDC Zero-Trust | HSTS"),
         ("auratetrax.com", "Aura Tech (15% Roy)", "Tema Cyber-Violeta Monospace", "Consola K8s mTLS + Slider Nodos GPU + SOAR Gate", "gVisor Isolation | SPIFFE mTLS | SLSA L3 OK"),
         ("auraintelstudios3d.com", "Aura Tech (15% Roy)", "Tema Ambar/Dorado Estudio 3D", "Selector glTF/USDZ + Verificador C2PA + API 3D", "C2PA v2.1 Ed25519 | 7.0% FL Surtax | DMCA 512"),

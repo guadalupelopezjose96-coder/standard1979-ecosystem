@@ -2,10 +2,10 @@
   "$schema": "http://cyclonedx.org/schema/bom-1.7.schema.json",
   "bomFormat": "CycloneDX",
   "specVersion": "1.7",
-  "serialNumber": "urn:uuid:79049048-9191-44ce-9dc6-edb45fa7730b",
+  "serialNumber": "urn:uuid:6ca60ccf-5e8f-4a45-b133-da4cd6bed339",
   "version": 1,
   "metadata": {
-    "timestamp": "2026-11-09T04:47:50+00:00",
+    "timestamp": "2026-11-11T00:56:44+00:00",
     "tools": {
       "components": [
         {
@@ -20,7 +20,7 @@
       ]
     },
     "component": {
-      "bom-ref": "c6c96476-2ff5-4be0-a20b-d41cddbcaf6f",
+      "bom-ref": "216ecefd-0049-41dc-99c5-27aa01d528fa",
       "type": "application",
       "name": ".",
       "properties": [
@@ -33,97 +33,7 @@
   },
   "components": [
     {
-      "bom-ref": "095ddeef-b9e0-4f1b-ac6b-31bfdc0f221a",
-      "type": "library",
-      "name": "fastapi",
-      "version": "0.115.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
-      "purl": "pkg:pypi/fastapi@0.115.0",
-      "properties": [
-        {
-          "name": "aquasecurity:trivy:PkgType",
-          "value": "pip"
-        }
-      ]
-    },
-    {
-      "bom-ref": "1298327e-6a5b-455f-ad05-6e9f3780ec26",
-      "type": "library",
-      "name": "fastapi",
-      "version": "0.115.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
-      "purl": "pkg:pypi/fastapi@0.115.0",
-      "properties": [
-        {
-          "name": "aquasecurity:trivy:PkgType",
-          "value": "pip"
-        }
-      ]
-    },
-    {
-      "bom-ref": "17de2d83-f5da-49b5-8e65-0400732803b8",
-      "type": "application",
-      "name": "aura-opco/security-gateway/requirements.txt",
-      "properties": [
-        {
-          "name": "aquasecurity:trivy:Class",
-          "value": "lang-pkgs"
-        },
-        {
-          "name": "aquasecurity:trivy:Type",
-          "value": "pip"
-        }
-      ]
-    },
-    {
-      "bom-ref": "25b1e5d7-8f3a-4f0d-bebd-98ff3635c851",
-      "type": "library",
-      "name": "uvicorn",
-      "version": "0.30.6",
-      "licenses": [
-        {
-          "license": {
-            "id": "BSD-3-Clause"
-          }
-        }
-      ],
-      "purl": "pkg:pypi/uvicorn@0.30.6",
-      "properties": [
-        {
-          "name": "aquasecurity:trivy:PkgType",
-          "value": "pip"
-        }
-      ]
-    },
-    {
-      "bom-ref": "38ff2883-1ff9-436f-9716-20ba39a2a0be",
-      "type": "application",
-      "name": "finance-tax-engine/requirements.txt",
-      "properties": [
-        {
-          "name": "aquasecurity:trivy:Class",
-          "value": "lang-pkgs"
-        },
-        {
-          "name": "aquasecurity:trivy:Type",
-          "value": "pip"
-        }
-      ]
-    },
-    {
-      "bom-ref": "3e9cdc69-75f4-4a40-a2bb-872f1bdf83ad",
+      "bom-ref": "05a0870e-8d42-452d-ac9f-bdaaf7cda96f",
       "type": "library",
       "name": "cryptography",
       "version": "43.0.1",
@@ -143,10 +53,10 @@
       ]
     },
     {
-      "bom-ref": "3f660007-f59e-47c4-89ae-d2df888476eb",
+      "bom-ref": "0cf49797-5055-44bc-9730-1b141a823320",
       "type": "library",
-      "name": "pydantic",
-      "version": "2.9.2",
+      "name": "fastapi",
+      "version": "0.115.0",
       "licenses": [
         {
           "license": {
@@ -154,7 +64,7 @@
           }
         }
       ],
-      "purl": "pkg:pypi/pydantic@2.9.2",
+      "purl": "pkg:pypi/fastapi@0.115.0",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -163,18 +73,18 @@
       ]
     },
     {
-      "bom-ref": "4a62c9b7-d046-4472-9101-b6739f4f749c",
+      "bom-ref": "149035ca-3435-4889-833b-6781ef30a45c",
       "type": "library",
-      "name": "pydantic",
-      "version": "2.9.2",
+      "name": "uvicorn",
+      "version": "0.30.6",
       "licenses": [
         {
           "license": {
-            "id": "MIT"
+            "id": "BSD-3-Clause"
           }
         }
       ],
-      "purl": "pkg:pypi/pydantic@2.9.2",
+      "purl": "pkg:pypi/uvicorn@0.30.6",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -183,7 +93,7 @@
       ]
     },
     {
-      "bom-ref": "4ad93e5f-fca4-48ad-aeb5-8e9231c20117",
+      "bom-ref": "1cc13731-35ed-40f1-9800-b1a5dbd6c570",
       "type": "application",
       "name": "aura-opco/sso-oidc-provider/requirements.txt",
       "properties": [
@@ -198,7 +108,27 @@
       ]
     },
     {
-      "bom-ref": "667bc295-dc11-44d2-b61c-d7949b963571",
+      "bom-ref": "4acc901a-553e-424d-a815-233763c52453",
+      "type": "library",
+      "name": "fastapi",
+      "version": "0.115.0",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "purl": "pkg:pypi/fastapi@0.115.0",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "pip"
+        }
+      ]
+    },
+    {
+      "bom-ref": "62d6563e-b788-4dd0-abb3-dd83358479b4",
       "type": "library",
       "name": "pydantic",
       "version": "2.9.2",
@@ -218,7 +148,27 @@
       ]
     },
     {
-      "bom-ref": "7b07fac7-539d-4a8e-acdd-91b53b1b0e4c",
+      "bom-ref": "68098e9d-b0cd-496d-81da-d8f5716c8fc5",
+      "type": "library",
+      "name": "pydantic",
+      "version": "2.9.2",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "purl": "pkg:pypi/pydantic@2.9.2",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "pip"
+        }
+      ]
+    },
+    {
+      "bom-ref": "7587131c-a693-43a9-af89-a288383501b3",
       "type": "library",
       "name": "uvicorn",
       "version": "0.30.6",
@@ -238,7 +188,27 @@
       ]
     },
     {
-      "bom-ref": "8cfde1c8-2c98-49d5-83a7-ba72c300bee0",
+      "bom-ref": "8002d54d-0129-4a35-8dab-da561ff5880e",
+      "type": "library",
+      "name": "pydantic",
+      "version": "2.9.2",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "purl": "pkg:pypi/pydantic@2.9.2",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "pip"
+        }
+      ]
+    },
+    {
+      "bom-ref": "95bba720-0bd8-454d-be40-a9ad6a93afd9",
       "type": "library",
       "name": "cryptography",
       "version": "43.0.1",
@@ -258,7 +228,37 @@
       ]
     },
     {
-      "bom-ref": "bec520ca-cb10-4339-a9b2-a64e63a2dd13",
+      "bom-ref": "ab47fe3d-d8c7-49da-8d56-170600e9af5f",
+      "type": "application",
+      "name": "aura-opco/security-gateway/requirements.txt",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:Class",
+          "value": "lang-pkgs"
+        },
+        {
+          "name": "aquasecurity:trivy:Type",
+          "value": "pip"
+        }
+      ]
+    },
+    {
+      "bom-ref": "b72c2d87-9dc1-4b05-b39f-c0d85b6ce045",
+      "type": "application",
+      "name": "finance-tax-engine/requirements.txt",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:Class",
+          "value": "lang-pkgs"
+        },
+        {
+          "name": "aquasecurity:trivy:Type",
+          "value": "pip"
+        }
+      ]
+    },
+    {
+      "bom-ref": "bbe07cb2-a5a5-4574-a9ac-f899dcb1c91b",
       "type": "library",
       "name": "uvicorn",
       "version": "0.30.6",
@@ -278,7 +278,7 @@
       ]
     },
     {
-      "bom-ref": "e40049f3-c8bb-4fec-a26d-abfd074d85ff",
+      "bom-ref": "fce5e875-6b1c-44f7-9905-6d04f808952a",
       "type": "library",
       "name": "fastapi",
       "version": "0.115.0",
@@ -400,86 +400,86 @@
   ],
   "dependencies": [
     {
-      "ref": "095ddeef-b9e0-4f1b-ac6b-31bfdc0f221a",
+      "ref": "05a0870e-8d42-452d-ac9f-bdaaf7cda96f",
       "dependsOn": []
     },
     {
-      "ref": "1298327e-6a5b-455f-ad05-6e9f3780ec26",
+      "ref": "0cf49797-5055-44bc-9730-1b141a823320",
       "dependsOn": []
     },
     {
-      "ref": "17de2d83-f5da-49b5-8e65-0400732803b8",
+      "ref": "149035ca-3435-4889-833b-6781ef30a45c",
+      "dependsOn": []
+    },
+    {
+      "ref": "1cc13731-35ed-40f1-9800-b1a5dbd6c570",
       "dependsOn": [
-        "3f660007-f59e-47c4-89ae-d2df888476eb",
-        "7b07fac7-539d-4a8e-acdd-91b53b1b0e4c",
-        "8cfde1c8-2c98-49d5-83a7-ba72c300bee0",
-        "e40049f3-c8bb-4fec-a26d-abfd074d85ff",
+        "05a0870e-8d42-452d-ac9f-bdaaf7cda96f",
+        "0cf49797-5055-44bc-9730-1b141a823320",
+        "8002d54d-0129-4a35-8dab-da561ff5880e",
+        "bbe07cb2-a5a5-4574-a9ac-f899dcb1c91b"
+      ]
+    },
+    {
+      "ref": "216ecefd-0049-41dc-99c5-27aa01d528fa",
+      "dependsOn": [
+        "1cc13731-35ed-40f1-9800-b1a5dbd6c570",
+        "ab47fe3d-d8c7-49da-8d56-170600e9af5f",
+        "b72c2d87-9dc1-4b05-b39f-c0d85b6ce045"
+      ]
+    },
+    {
+      "ref": "4acc901a-553e-424d-a815-233763c52453",
+      "dependsOn": []
+    },
+    {
+      "ref": "62d6563e-b788-4dd0-abb3-dd83358479b4",
+      "dependsOn": []
+    },
+    {
+      "ref": "68098e9d-b0cd-496d-81da-d8f5716c8fc5",
+      "dependsOn": []
+    },
+    {
+      "ref": "7587131c-a693-43a9-af89-a288383501b3",
+      "dependsOn": []
+    },
+    {
+      "ref": "8002d54d-0129-4a35-8dab-da561ff5880e",
+      "dependsOn": []
+    },
+    {
+      "ref": "95bba720-0bd8-454d-be40-a9ad6a93afd9",
+      "dependsOn": []
+    },
+    {
+      "ref": "ab47fe3d-d8c7-49da-8d56-170600e9af5f",
+      "dependsOn": [
+        "62d6563e-b788-4dd0-abb3-dd83358479b4",
+        "7587131c-a693-43a9-af89-a288383501b3",
+        "95bba720-0bd8-454d-be40-a9ad6a93afd9",
+        "fce5e875-6b1c-44f7-9905-6d04f808952a",
         "pkg:pypi/c2pa-python@0.6.0",
         "pkg:pypi/presidio-analyzer@2.2.355",
         "pkg:pypi/presidio-anonymizer@2.2.355"
       ]
     },
     {
-      "ref": "25b1e5d7-8f3a-4f0d-bebd-98ff3635c851",
-      "dependsOn": []
-    },
-    {
-      "ref": "38ff2883-1ff9-436f-9716-20ba39a2a0be",
+      "ref": "b72c2d87-9dc1-4b05-b39f-c0d85b6ce045",
       "dependsOn": [
-        "095ddeef-b9e0-4f1b-ac6b-31bfdc0f221a",
-        "4a62c9b7-d046-4472-9101-b6739f4f749c",
-        "bec520ca-cb10-4339-a9b2-a64e63a2dd13",
+        "149035ca-3435-4889-833b-6781ef30a45c",
+        "4acc901a-553e-424d-a815-233763c52453",
+        "68098e9d-b0cd-496d-81da-d8f5716c8fc5",
         "pkg:pypi/httpx@0.27.2",
         "pkg:pypi/stripe@10.12.0"
       ]
     },
     {
-      "ref": "3e9cdc69-75f4-4a40-a2bb-872f1bdf83ad",
+      "ref": "bbe07cb2-a5a5-4574-a9ac-f899dcb1c91b",
       "dependsOn": []
     },
     {
-      "ref": "3f660007-f59e-47c4-89ae-d2df888476eb",
-      "dependsOn": []
-    },
-    {
-      "ref": "4a62c9b7-d046-4472-9101-b6739f4f749c",
-      "dependsOn": []
-    },
-    {
-      "ref": "4ad93e5f-fca4-48ad-aeb5-8e9231c20117",
-      "dependsOn": [
-        "1298327e-6a5b-455f-ad05-6e9f3780ec26",
-        "25b1e5d7-8f3a-4f0d-bebd-98ff3635c851",
-        "3e9cdc69-75f4-4a40-a2bb-872f1bdf83ad",
-        "667bc295-dc11-44d2-b61c-d7949b963571"
-      ]
-    },
-    {
-      "ref": "667bc295-dc11-44d2-b61c-d7949b963571",
-      "dependsOn": []
-    },
-    {
-      "ref": "7b07fac7-539d-4a8e-acdd-91b53b1b0e4c",
-      "dependsOn": []
-    },
-    {
-      "ref": "8cfde1c8-2c98-49d5-83a7-ba72c300bee0",
-      "dependsOn": []
-    },
-    {
-      "ref": "bec520ca-cb10-4339-a9b2-a64e63a2dd13",
-      "dependsOn": []
-    },
-    {
-      "ref": "c6c96476-2ff5-4be0-a20b-d41cddbcaf6f",
-      "dependsOn": [
-        "17de2d83-f5da-49b5-8e65-0400732803b8",
-        "38ff2883-1ff9-436f-9716-20ba39a2a0be",
-        "4ad93e5f-fca4-48ad-aeb5-8e9231c20117"
-      ]
-    },
-    {
-      "ref": "e40049f3-c8bb-4fec-a26d-abfd074d85ff",
+      "ref": "fce5e875-6b1c-44f7-9905-6d04f808952a",
       "dependsOn": []
     },
     {
